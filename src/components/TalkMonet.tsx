@@ -21,7 +21,6 @@ export default function TalkMonet() {
             <span className="mc-en">CLAUDE MONET · 1840–1926</span>
             <div className="mc-tags"><span>인상주의</span><span>프랑스</span><span>지베르니</span></div>
             <p className="mc-bio">빛을 그린 화가. 같은 풍경을 시간마다 다시 그리며 '보이는 그대로'를 붙잡으려 했어요.</p>
-            <p className="mc-warn">※ 실제 AI 연결 전 시안이에요. 모네의 편지와 기록을 바탕으로 미리 준비한 답변으로 대화해요.</p>
           </div>
         </aside>
         <div className="mc-main">
