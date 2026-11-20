@@ -1,10 +1,17 @@
-import { useState } from 'react'
-import { exhibitionList as L, type ListExhibition } from '../data/exhibitions'
+import { useEffect, useRef, useState } from 'react'
+import { artsideArc } from '../arcAnim'
+import { exhibitionList as L, popularRanking, type ListExhibition } from '../data/exhibitions'
 import Header from './Header'
 import Footer from './Footer'
 
 const img = (p: string) => `images/${p}`
 const DETAIL = '#/exhibition/monet100'
+
+/** 인기 전시 포스터를 위쪽 아치(반원) 모양으로 놓기 위한 위치 계산 */
+const arcPos = (t: number) => {
+  const a = ((90 - t * 84) * Math.PI) / 180
+  return { x: `${(50 + 45 * Math.cos(a)).toFixed(2)}%`, y: `${Math.round(411 - 293 * Math.sin(a))}px`, r: `${(t * 34).toFixed(1)}deg` }
+}
 
 const TABS: { key: string; label: string; test: (x: ListExhibition) => boolean }[] = [
   { key: 'all', label: '전체', test: () => true },
@@ -14,97 +21,19 @@ const TABS: { key: string; label: string; test: (x: ListExhibition) => boolean }
   { key: 'abroad', label: '해외', test: (x) => x.region === '해외' },
 ]
 
-/** 카드 모양 6가지를 돌아가며 써서 매거진처럼 엇갈린(메이슨리) 목록을 만들어요 */
-const VARIANTS = ['a', 'f', 'd', 'e', 'b', 'c'] as const
-type Variant = (typeof VARIANTS)[number]
-const variantOf = (x: ListExhibition, k: number): Variant => {
-  if (x.id === 'monet100') return 'c'
-  const v = VARIANTS[((k % VARIANTS.length) + VARIANTS.length) % VARIANTS.length]
-  return v === 'e' && x.progress == null ? 'b' : v
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return <div><b>{value}</b><small>{label}</small></div>
-}
-
-function Card({ x, k }: { x: ListExhibition; k: number }) {
-  const v = variantOf(x, k)
-  const doc = x.id === 'monet100'
-  const photo = <img src={img(x.img)} alt={`${x.title} 포스터`} style={{ objectPosition: x.pos }} />
-  const chips = <div className="mc-chips"><span className="mc-chip">{x.city}</span><span className="mc-chip">{x.tag}</span></div>
-  const badge = <span className={`mc-badge${x.endingSoon ? ' hot' : ''}`}>{x.badge}</span>
-
-  if (v === 'a')
-    return (
-      <a className="mc mc-a" href={DETAIL}>
-        {photo}{chips}{badge}
-        <div className="mc-a-foot"><strong>{x.title}<small>{x.venue}</small></strong><span className="mc-round">↗</span></div>
-      </a>
-    )
-  if (v === 'b')
-    return (
-      <a className="mc mc-b" href={DETAIL}>
-        {photo}<span className="mc-b-top">{x.city} · {x.tag}</span>{badge}
-        <div className="mc-b-body">
-          <strong>{x.title}</strong>
-          <p>{x.venue}<br />{x.period}</p>
-          <div className="mc-b-row">
-            <div className="mc-stats"><Stat value={x.ddLabel} label={x.ddSub} /><Stat value={x.city} label="도시" /></div>
-            <span className="mc-pill light">전시 보기</span>
-          </div>
-        </div>
-      </a>
-    )
-  if (v === 'c')
-    return (
-      <a className="mc mc-c" href={DETAIL}>
-        <div className="mc-c-img">{photo}{chips}{badge}<div className="mc-dots"><span /><span /><span /><span /></div></div>
-        <div className="mc-c-body">
-          <div className="mc-c-head"><strong>{x.title}</strong><span className={`mc-outline${doc ? ' red' : ''}`}>{doc ? '도슨트 해설' : x.tag}</span></div>
-          <span className="mc-c-meta">{x.period} · {x.city}</span>
-          <span className="mc-c-desc">{doc ? '대표작 11점의 감상 포인트를 미리 보고 가세요. ' : ''}{x.venue}</span>
-          <div className="mc-c-foot">
-            <b>{x.ddLabel}<small>{x.ddSub}</small></b>
-            <span className="mc-pill dark">{doc ? '전시 상세 보기' : '전시 보기'} <i>↗</i></span>
-          </div>
-        </div>
-      </a>
-    )
-  if (v === 'd')
-    return (
-      <a className="mc mc-d" href={DETAIL}>
-        {photo}
-        <div className="mc-d-top"><strong>{x.title}<small>{x.venue}</small></strong><em>{x.period}</em></div>
-        <div className="mc-d-foot">
-          <div className="mc-stats"><Stat value={x.ddLabel} label={x.ddSub} /><Stat value={x.city} label="도시" /><Stat value={x.tag} label="상태" /></div>
-          <span className="mc-pill light">자세히</span>
-        </div>
-      </a>
-    )
-  if (v === 'e')
-    return (
-      <a className="mc mc-e" href={DETAIL}>
-        <div className="mc-e-img">{photo}{badge}</div>
-        <div className="mc-e-body">
-          <div className="mc-e-head">
-            <strong>{x.title}<small>{x.venue}</small></strong>
-            <div className="mc-prog"><span><i style={{ width: `${x.progress}%` }} /><em>{x.progress}%</em></span><small>기간 진행률</small></div>
-          </div>
-          <div className="mc-stats"><Stat value={x.ddLabel} label={x.ddSub} /><Stat value={x.city} label="도시" /><Stat value={x.tag} label="상태" /></div>
-          <span className="mc-wide">전시 보기</span>
-        </div>
-      </a>
-    )
+/** 세로 포스터 카드 — 모든 카드가 같은 비율·같은 줄에 맞춰 정렬돼요 */
+function Card({ x }: { x: ListExhibition }) {
   return (
-    <a className="mc mc-f" href={DETAIL}>
-      <span className="mc-f-k"><span />ARTSIDE PICK</span>
-      <strong>{x.title}</strong>
-      <p>{x.venue} · {x.period}</p>
-      <div className="mc-f-row">
-        <div className="mc-stats"><Stat value={x.ddLabel} label={x.ddSub} /><Stat value={x.city} label="도시" /></div>
-        <span className="mc-pill dark">전시 보기</span>
+    <a className="gc" href={DETAIL}>
+      <div className="gc-img">
+        <img src={img(x.img)} alt={`${x.title} 포스터`} style={{ objectPosition: x.pos }} />
+        <span className={`gc-badge${x.endingSoon ? ' hot' : ''}`}>{x.badge}</span>
+        {x.id === 'monet100' && <span className="gc-badge doc">도슨트 해설</span>}
+        <div className="gc-info"><small>{x.city} · {x.tag}</small><span>{x.venue}</span></div>
+        <span className="gc-go" aria-hidden="true">↗</span>
       </div>
-      <div className="mc-f-img">{photo}</div>
+      <strong>{x.title}</strong>
+      <span className="gc-meta">{x.period}</span>
     </a>
   )
 }
@@ -113,12 +42,15 @@ function Card({ x, k }: { x: ListExhibition; k: number }) {
 export default function ExhibitionList() {
   const [tab, setTab] = useState('all')
   const [sort, setSort] = useState<'end' | 'new'>('end')
+  const [sel, setSel] = useState(0)
+  const cur = popularRanking[sel]
+  const arcRef = useRef<HTMLElement>(null)
+  useEffect(() => artsideArc(arcRef.current, (i: number) => setSel(i)), [])
 
   const test = TABS.find((t) => t.key === tab)!.test
   const list = L.filter(test).sort((a, b) => (sort === 'end' ? a.endDays - b.endDays : b.startKey.localeCompare(a.startKey)))
   const fi = list.findIndex((x) => x.id === 'monet100')
   if (fi > 0) list.unshift(list.splice(fi, 1)[0])
-  const offset = list[0]?.id === 'monet100' ? 1 : 0
 
   return (
     <>
@@ -135,6 +67,34 @@ export default function ExhibitionList() {
             </div>
             <span className="mhead__cnt" aria-live="polite"><b>{list.length}</b>개의 전시</span>
           </div>
+          <section className="arc" ref={arcRef} aria-label="이번 주 인기 전시 TOP 9">
+            <div className="arc-frame" aria-hidden="true" />
+            {popularRanking.map((x, i) => {
+              const p = arcPos(x.t)
+              return (
+                <button key={x.id} type="button" className={`arc-p${i === sel ? ' on' : ''}`} aria-pressed={i === sel}
+                  aria-label={`${x.no}위 ${x.title}`}
+                  style={{ left: p.x, top: p.y, ['--r' as string]: p.r } as React.CSSProperties}>
+                  <img src={img(x.img)} alt="" style={{ objectPosition: x.pos }} />
+                  <span className="arc-no">{x.no}</span>
+                </button>
+              )
+            })}
+            <div className="arc-c">
+              <span className="arc-k">TOP 9 · 이번 주 인기 전시</span>
+              <div className="arc-body" key={cur.id} aria-live="polite">
+                <div className="arc-rank"><b>{cur.no}</b><span className={cur.chgCls}>{cur.chg}</span></div>
+                <h2 className="arc-t">{cur.title}</h2>
+                <span className="arc-m">{cur.venue} · {cur.city}</span>
+                <span className="arc-m">{cur.period}</span>
+                <div className="arc-row">
+                  <span className={`arc-dd${cur.hot ? ' hot' : ''}`}>{cur.dd}</span>
+                  <a className="arc-go" href={DETAIL}>전시 상세 보기 →</a>
+                </div>
+              </div>
+              <span className="arc-note">포스터에 마우스를 올리면 액자 속으로 들어와요 · 순위는 시안용 예시</span>
+            </div>
+          </section>
           <div className="mbar">
             <div className="mbar__tabs" role="tablist" aria-label="전시 구분">
               {TABS.map((t) => (
@@ -150,10 +110,10 @@ export default function ExhibitionList() {
             </div>
           </div>
           {list.length === 0 ? (
-            <p className="mempty">조건에 맞는 전시가 없어요.</p>
+            <p className="gempty">조건에 맞는 전시가 없어요.</p>
           ) : (
-            <div className="mlist">
-              {list.map((x, i) => <Card key={x.id} x={x} k={i - offset} />)}
+            <div className="glist">
+              {list.map((x) => <Card key={x.id} x={x} />)}
             </div>
           )}
           <p className="mnote">※ 전시 정보는 2026. 11. 20 기준 시안용 데이터예요. 관람 전 예매처에서 다시 확인해 주세요.</p>
