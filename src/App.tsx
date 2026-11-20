@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useLayoutEffect } from 'react'
 import ExhibitionDetail from './components/ExhibitionDetail'
 import ExhibitionList from './components/ExhibitionList'
 import { EXHIBITIONS_PATH, getSearchQuery } from './lib/search'
@@ -26,13 +26,17 @@ export const MONET_DETAIL = '#/exhibition/monet100'
 function useHash() {
   const [hash, setHash] = useState(window.location.hash)
   useEffect(() => {
-    const on = () => {
-      setHash(window.location.hash)
-      window.scrollTo({ top: 0, behavior: 'instant' })
-    }
+    const on = () => setHash(window.location.hash)
     window.addEventListener('hashchange', on)
     return () => window.removeEventListener('hashchange', on)
   }, [])
+  // 화면(목록→상세 등)이 바뀌면, 새 화면이 그려진 직후 남은 관성 스크롤을 멈추고 맨 위에서 시작해요.
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+    const top = (window as unknown as { __artsideScrollTop?: () => void }).__artsideScrollTop
+    if (top) top()
+    else window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [hash])
   return hash
 }
 

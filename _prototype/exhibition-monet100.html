@@ -243,6 +243,7 @@ addEventListener('scroll', () => { let k = 0; secs.forEach((s, i) => { if (s.get
 <script>
 (function () {
   if (window.__artsideSmooth) return; window.__artsideSmooth = true;
+  window.__artsideScrollTop = function () { window.scrollTo({ top: 0, behavior: 'instant' }); };
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var target = window.scrollY, cur = window.scrollY, raf = 0;
   function max() { return document.documentElement.scrollHeight - window.innerHeight; }
@@ -269,6 +270,9 @@ addEventListener('scroll', () => { let k = 0; secs.forEach((s, i) => { if (s.get
     if (!raf) raf = requestAnimationFrame(step);
   }, { passive: false });
   window.addEventListener('scroll', function () { if (!raf) { target = cur = window.scrollY; } }, { passive: true });
+  // 페이지(화면)를 옮길 때는 남아 있던 관성 스크롤을 멈추고 맨 위에서 시작해요.
+  window.__artsideScrollTop = function () { if (raf) cancelAnimationFrame(raf); raf = 0; target = cur = 0; window.scrollTo({ top: 0, behavior: 'instant' }); };
+  window.addEventListener('hashchange', function () { if (/^#\//.test(location.hash)) window.__artsideScrollTop(); });
 })();
 </script>
 <script>
