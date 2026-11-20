@@ -104,6 +104,35 @@ dt{color:#6E6E6E}dd{margin:0}
 .rel span{font-size:13px;color:#6E6E6E}
 footer{margin-top:112px;background:#F4F3EF}
 @media (max-width:900px){.docent{grid-template-columns:1fr;gap:0;padding:0 20px}.viewer{justify-content:center}.frame{height:260px}.visit,.rel{grid-template-columns:1fr}h1{font-size:36px}}
+.lt{display:grid;grid-template-columns:380px 1fr;gap:64px;align-items:center;padding:44px 56px 44px 44px;border-radius:24px;background:#EDF0F3}
+.lt-stage{position:relative;width:380px;height:560px;border-radius:4px;overflow:hidden;background:#C9D0D6;box-shadow:0 28px 50px -18px rgba(30,30,40,.45),0 6px 14px rgba(30,30,40,.12)}
+.lt-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;display:block}
+.lt-chip{position:absolute;left:16px;bottom:16px;font-family:'Oswald',sans-serif;font-size:15px;font-weight:600;letter-spacing:.06em;color:#fff;background:rgba(28,28,28,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:999px;padding:4px 12px}
+.lt-k{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.16em;color:#C8102E}
+.lt-h{margin:10px 0 0;font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;line-height:1.35;color:#1C1C1C}
+.lt-p{margin:14px 0 0;font-size:15px;line-height:1.75;color:#4A4A4A;max-width:560px}
+.lt-now{margin-top:30px;padding-top:24px;border-top:1px solid rgba(28,28,28,.12);min-height:150px}
+.lt-row{display:flex;align-items:baseline;gap:14px}
+.lt-clock{font-family:'Oswald',sans-serif;font-size:44px;font-weight:600;line-height:1;color:#1C1C1C;font-variant-numeric:tabular-nums}
+.lt-name{font-size:19px;font-weight:700;color:#1C1C1C}
+.lt-desc{margin:12px 0 0;font-size:14.5px;line-height:1.7;color:#4A4A4A;max-width:560px;animation:ltIn .4s ease-out both}
+@keyframes ltIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.lt-pal{display:flex;align-items:center;gap:6px;margin-top:14px}
+.lt-pal i{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:background .4s}
+.lt-pal span{margin-left:6px;font-size:12px;color:#8A8A8A}
+.lt-ctrl{margin-top:26px;max-width:560px}
+.lt-ctrl input{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;background:linear-gradient(90deg,#B9C5D2 0%,#DDE3E8 33%,#E7C676 66%,#E3874F 100%);outline:none;margin:0;cursor:pointer}
+.lt-ctrl input::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:3px solid #1C1C1C;box-shadow:0 4px 10px rgba(0,0,0,.2);cursor:grab}
+.lt-ctrl input::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid #1C1C1C;box-shadow:0 4px 10px rgba(0,0,0,.2);cursor:grab}
+.lt-ctrl input:focus-visible{box-shadow:0 0 0 3px rgba(200,16,46,.35)}
+.lt-stops{display:flex;justify-content:space-between;margin-top:12px}
+.lt-stops button{border:none;background:none;padding:6px 0;font:inherit;font-size:13px;color:#8A8A8A;cursor:pointer;min-width:44px;text-align:center}
+.lt-stops button:first-child{text-align:left}.lt-stops button:last-child{text-align:right}
+.lt-stops button.on{color:#1C1C1C;font-weight:700}
+.lt-play{margin-top:22px;display:inline-flex;align-items:center;gap:8px;border:1px solid #1C1C1C;background:transparent;color:#1C1C1C;font:inherit;font-size:13px;font-weight:500;padding:0 18px;min-height:40px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.lt-play:hover{background:#1C1C1C;color:#fff}
+.lt-note{margin-top:14px;font-size:12px;color:#8A8A8A}
+@media (max-width:1000px){.lt{grid-template-columns:1fr;gap:28px;padding:24px}.lt-stage{width:100%;max-width:380px;height:auto;aspect-ratio:2/3;margin:0 auto}}
 </style>
 </head>
 <body>
@@ -115,7 +144,7 @@ footer{margin-top:112px;background:#F4F3EF}
 <main>
 <div class="wrap"><nav class="crumb" aria-label="현재 위치"><a href="index.html">홈</a><span>/</span><a href="exhibitions.html">전시</a><span>/</span><span style="color:#1C1C1C">MONET 100</span></nav>
 <section class="hero" id="hero"></section></div>
-<nav class="tabs" aria-label="상세 메뉴"><div class="wrap"><a href="#intro" class="on">전시 소개</a><a href="#works">작품 해설</a><a href="#visit">관람 정보</a></div></nav>
+<nav class="tabs" aria-label="상세 메뉴"><div class="wrap"><a href="#intro" class="on">전시 소개</a><a href="#works">작품 해설</a><a href="#light">빛의 연작</a><a href="#visit">관람 정보</a></div></nav>
 <div class="wrap">
 <section class="sec" id="intro" aria-labelledby="introT"><div class="sh"><h2 id="introT">전시 소개</h2></div><div class="intro" id="introBox"></div></section>
 <section class="sec" id="works" aria-labelledby="worksT"><div class="sh"><h2 id="worksT">작품 해설</h2><span>그림 위 빨간 점을 누르면 감상 포인트가 열려요</span></div>
@@ -123,7 +152,7 @@ footer{margin-top:112px;background:#F4F3EF}
 <div class="tbar"><span><b id="counter"></b> · 옆으로 넘겨 다른 작품을 골라 보세요</span><span style="display:flex;gap:6px"><button type="button" class="arw" id="prevW" aria-label="이전 작품"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button><button type="button" class="arw" id="nextW" aria-label="다음 작품"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button></span></div>
 <div class="thumbs" id="thumbs" role="tablist" aria-label="작품 선택"></div>
 <p class="note">※ 미디어 전시에서 실제로 다루는 작품 구성과 다를 수 있는 시안용 예시예요. 작품 이미지: Wikimedia Commons (퍼블릭 도메인)</p></section>
-<section class="sec" id="visit" aria-labelledby="visitT"><div class="sh"><h2 id="visitT">관람 정보</h2></div><div class="visit" id="visitBox"></div></section>
+<section class="sec" id="light" aria-labelledby="lightT"><div class="sh"><h2 id="lightT">빛의 연작</h2><span>막대를 끌어 하루의 빛을 흘려보세요</span></div><div class="lt"><div class="lt-stage" role="img" aria-label="모네, 루앙 대성당 연작 — 같은 정면을 시간대별로 그린 그림"><img src="../public/images/monet_rouen-fog.jpg" alt="" draggable="false"><img src="../public/images/monet_rouen-morning.jpg" alt="" draggable="false"><img src="../public/images/monet_rouen-noon.jpg" alt="" draggable="false"><img src="../public/images/monet_rouen-sunset.jpg" alt="" draggable="false"><span class="lt-chip">06:00</span></div><div class="lt-body"><span class="lt-k">ROUEN CATHEDRAL SERIES · 1892–1894</span><h3 class="lt-h">같은 성당, 서른 번의 다른 빛</h3><p class="lt-p">모네는 루앙 대성당 맞은편 건물에 방을 빌려, 같은 정면을 30점 넘게 그렸어요. 그가 그리고 싶었던 건 돌로 된 성당이 아니라 그 위에 시시각각 내려앉는 빛과 공기였어요.</p><div class="lt-now" aria-live="polite"><div class="lt-row"><b class="lt-clock">06:00</b><strong class="lt-name">새벽 안개</strong></div><p class="lt-desc"></p><div class="lt-pal"><i></i><i></i><i></i><i></i><span>이 시간의 팔레트</span></div></div><div class="lt-ctrl"><input type="range" min="0" max="300" step="1" value="0" aria-label="하루 시간대 (새벽부터 해질녘까지)"><div class="lt-stops"><button type="button" aria-pressed="false">새벽</button><button type="button" aria-pressed="false">아침</button><button type="button" aria-pressed="false">한낮</button><button type="button" aria-pressed="false">해질녘</button></div></div><button type="button" class="lt-play">▶ 하루 흘려보기</button><p class="lt-note">시각은 감상을 돕기 위한 예시예요 · 작품 이미지: Wikimedia Commons (퍼블릭 도메인)</p></div></div></section><section class="sec" id="visit" aria-labelledby="visitT"><div class="sh"><h2 id="visitT">관람 정보</h2></div><div class="visit" id="visitBox"></div></section>
 <section class="sec" aria-labelledby="relT"><div class="sh"><h2 id="relT">함께 보면 좋은 전시</h2><a href="exhibitions.html" style="font-size:14px;color:#6E6E6E;text-decoration:none">전시 더 보기 →</a></div><div class="rel" id="relBox"></div></section>
 </div>
 </main>
@@ -298,6 +327,71 @@ addEventListener('scroll', () => { let k = 0; secs.forEach((s, i) => { if (s.get
   new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
   setTimeout(schedule, 700);
 })();
+</script>
+<script>function artsideLight(root) {
+  if (!root) return function () {};
+  var S = [
+    { m: 360, n: '새벽 안개', bg: [237, 240, 243], pal: ['#DDE3E8', '#B9C6D3', '#93A6BB', '#C9C4BE'], d: '형태가 거의 녹아 없어지고 회청색 공기만 남았어요. 단단한 돌 성당이 얇은 안개 한 겹처럼 보여요.' },
+    { m: 540, n: '아침 햇살', bg: [236, 240, 242], pal: ['#ECEEEF', '#C3CED7', '#6E86A3', '#A9A28E'], d: '차가운 흰빛이 정면을 씻어 내려요. 해가 닿은 면은 흰색과 은색으로, 그늘진 문은 푸른색으로 갈라져요.' },
+    { m: 780, n: '한낮의 빛', bg: [246, 239, 224], pal: ['#F1E3B6', '#D9B66E', '#8FA3BC', '#9C7A4E'], d: '해가 정면을 비추면 돌이 금빛으로 달아올라요. 그림자조차 검정이 아니라 파랑과 보라로 칠해 빛의 온도를 보여 줘요.' },
+    { m: 1080, n: '해질녘', bg: [248, 233, 220], pal: ['#F2C77E', '#E58E57', '#C86A4E', '#5D73A0'], d: '낮게 깔린 햇빛에 성당 전체가 주황과 분홍으로 타올라요. 아래쪽 문은 벌써 푸른 저녁에 잠겼어요.' }
+  ];
+  var box = root.querySelector('.lt'), imgs = root.querySelectorAll('.lt-stage img'), rg = root.querySelector('.lt-ctrl input');
+  var chip = root.querySelector('.lt-chip'), clock = root.querySelector('.lt-clock'), name = root.querySelector('.lt-name'), desc = root.querySelector('.lt-desc');
+  var pals = root.querySelectorAll('.lt-pal i'), stops = root.querySelectorAll('.lt-stops button'), play = root.querySelector('.lt-play');
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var v = 0, cur = -1, raf = 0, io = null, played = false;
+  var two = function (x) { return (x < 10 ? '0' : '') + x; };
+  function set(x) {
+    v = Math.max(0, Math.min(3, x));
+    var i = Math.min(2, Math.floor(v)), f = v - i;
+    for (var k = 0; k < imgs.length; k++) imgs[k].style.opacity = k <= i ? 1 : (k === i + 1 ? f : 0);
+    var a = S[i].bg, b = S[i + 1].bg;
+    box.style.background = 'rgb(' + [0, 1, 2].map(function (j) { return Math.round(a[j] + (b[j] - a[j]) * f); }).join(',') + ')';
+    var mm = Math.round(S[i].m + (S[i + 1].m - S[i].m) * f), t = two(Math.floor(mm / 60)) + ':' + two(mm % 60);
+    chip.textContent = t; clock.textContent = t;
+    rg.value = Math.round(v * 100);
+    var n = Math.round(v);
+    if (n !== cur) {
+      cur = n; name.textContent = S[n].n; desc.textContent = S[n].d;
+      desc.style.animation = 'none'; void desc.offsetWidth; desc.style.animation = '';
+      for (var p = 0; p < pals.length; p++) pals[p].style.background = S[n].pal[p];
+      for (var q = 0; q < stops.length; q++) { stops[q].classList.toggle('on', q === n); stops[q].setAttribute('aria-pressed', q === n); }
+    }
+  }
+  function tween(to, ms, done) {
+    cancelAnimationFrame(raf);
+    if (still) { set(to); if (done) done(); return; }
+    var from = v, t0 = performance.now();
+    function step(now) {
+      var k = Math.min(1, (now - t0) / ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      set(from + (to - from) * e);
+      if (k < 1) raf = requestAnimationFrame(step); else if (done) done();
+    }
+    raf = requestAnimationFrame(step);
+  }
+  function day() { set(0); play.textContent = '하루 흘러가는 중…'; tween(3, 4200, function () { play.textContent = '▶ 하루 다시 보기'; }); }
+  function onInput() { cancelAnimationFrame(raf); set(rg.value / 100); }
+  function onChange() { tween(Math.round(v), 280); }
+  rg.addEventListener('input', onInput);
+  rg.addEventListener('change', onChange);
+  var onStop = [];
+  for (var s = 0; s < stops.length; s++) (function (k) { onStop[k] = function () { tween(k, 600); }; stops[k].addEventListener('click', onStop[k]); })(s);
+  play.addEventListener('click', day);
+  set(0);
+  if ('IntersectionObserver' in window && !still) {
+    io = new IntersectionObserver(function (es) { if (es[0].isIntersecting && !played) { played = true; io.disconnect(); setTimeout(day, 300); } }, { threshold: 0.45 });
+    io.observe(box);
+  }
+  return function () {
+    cancelAnimationFrame(raf); if (io) io.disconnect();
+    rg.removeEventListener('input', onInput); rg.removeEventListener('change', onChange);
+    for (var k = 0; k < stops.length; k++) stops[k].removeEventListener('click', onStop[k]);
+    play.removeEventListener('click', day);
+  };
+}
+
+artsideLight(document.getElementById('light'));
 </script>
 </body>
 </html>

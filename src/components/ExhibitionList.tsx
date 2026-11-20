@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { artsideArc } from '../arcAnim'
-import { exhibitionList as L, popularRanking, type ListExhibition } from '../data/exhibitions'
+import { popularRanking } from '../data/exhibitions'
+import { useExhibitions, type ListExhibition } from '../lib/exhibitions'
+import { EXHIBITIONS_PATH } from '../lib/search'
 import Header from './Header'
 import Footer from './Footer'
 
@@ -39,7 +41,8 @@ function Card({ x }: { x: ListExhibition }) {
 }
 
 /** 전시 목록 — 제목·필터·정렬 + 엇갈린 카드 목록 */
-export default function ExhibitionList() {
+export default function ExhibitionList({ query = '' }: { query?: string }) {
+  const { status, data: L, reload } = useExhibitions(query)
   const [tab, setTab] = useState('all')
   const [sort, setSort] = useState<'end' | 'new'>('end')
   const [sel, setSel] = useState(0)
@@ -63,9 +66,17 @@ export default function ExhibitionList() {
           <div className="mhead">
             <div>
               <h1>전시</h1>
-              <p>지금 열리고 있거나 곧 열리는 국내외 전시를 모았어요.</p>
+              {query ? (
+                <p className="msearch">
+                  ‘<b>{query}</b>’ 검색 결과 <a href={EXHIBITIONS_PATH}>검색 지우기 ×</a>
+                </p>
+              ) : (
+                <p>지금 열리고 있거나 곧 열리는 국내외 전시를 모았어요.</p>
+              )}
             </div>
-            <span className="mhead__cnt" aria-live="polite"><b>{list.length}</b>개의 전시</span>
+            <span className="mhead__cnt" aria-live="polite">
+              {status === 'loading' && L.length === 0 ? '불러오는 중…' : <><b>{list.length}</b>개의 전시</>}
+            </span>
           </div>
           <section className="arc" ref={arcRef} aria-label="이번 주 인기 전시 TOP 9">
             <div className="arc-frame" aria-hidden="true" />
@@ -109,14 +120,23 @@ export default function ExhibitionList() {
               <button type="button" className={sort === 'new' ? 'is-on' : ''} onClick={() => setSort('new')}>최근 오픈순</button>
             </div>
           </div>
-          {list.length === 0 ? (
-            <p className="gempty">조건에 맞는 전시가 없어요.</p>
+          {status === 'error' ? (
+            <div className="gempty" role="alert">
+              전시 정보를 불러오지 못했어요.{' '}
+              <button type="button" className="gretry" onClick={reload}>다시 시도</button>
+            </div>
+          ) : status === 'loading' && L.length === 0 ? (
+            <p className="gempty" aria-busy="true">전시 정보를 불러오는 중이에요…</p>
+          ) : list.length === 0 ? (
+            <p className="gempty">
+              {query ? `‘${query}’에 맞는 전시가 없어요. 다른 검색어로 찾아보세요.` : '조건에 맞는 전시가 없어요.'}
+            </p>
           ) : (
             <div className="glist">
               {list.map((x) => <Card key={x.id} x={x} />)}
             </div>
           )}
-          <p className="mnote">※ 전시 정보는 2026. 11. 20 기준 시안용 데이터예요. 관람 전 예매처에서 다시 확인해 주세요.</p>
+          <p className="mnote">※ 전시 정보는 시안용 데이터예요. 관람 전 예매처에서 다시 확인해 주세요.</p>
         </div>
       </main>
       <Footer />

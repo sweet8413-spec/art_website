@@ -58,20 +58,19 @@ footer{margin-top:112px;background:#E2E1DD}
 .gempty{grid-column:1/-1;padding:80px 0;text-align:center;color:#8A8A8A}
 @media (max-width:1000px){.glist{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:720px){.glist{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}}
-.arc{position:relative;height:462px;margin-top:8px;background:radial-gradient(ellipse 210px 190px at 50% 0,rgba(255,238,200,.55),rgba(255,238,200,0) 72%)}
-.arc-frame{position:absolute;left:50%;top:118px;width:171px;height:210px;transform:translate(-50%,-50%);box-sizing:border-box;border:11px solid #4A3220;border-image:linear-gradient(145deg,#8A6440 0%,#5A3B22 22%,#3A2414 50%,#5E4026 74%,#2C1B0F 100%) 1;outline:2px solid #C9A65E;outline-offset:-13px;background:#F3EFE6 repeating-linear-gradient(45deg,rgba(0,0,0,.018) 0 2px,transparent 2px 4px);box-shadow:0 26px 34px -14px rgba(40,24,10,.55),0 6px 12px rgba(40,24,10,.22),inset 0 0 0 1px rgba(255,255,255,.4),inset 0 2px 6px rgba(0,0,0,.18);z-index:0;pointer-events:none}
-.arc-frame::before{content:'';position:absolute;inset:10px;background:#FBF9F4;box-shadow:inset 1px 1px 0 rgba(0,0,0,.14),inset -1px -1px 0 rgba(255,255,255,.9),0 0 0 1px rgba(0,0,0,.05)}
-.arc-frame::after{content:'';position:absolute;left:50%;top:-24px;width:74px;height:7px;transform:translateX(-50%);border-radius:4px;background:linear-gradient(180deg,#E6CB8A,#B08A44 60%,#7E6130);box-shadow:0 2px 3px rgba(0,0,0,.25)}
+.arc{position:relative;height:470px;margin-top:8px;background:radial-gradient(ellipse 210px 190px at 50% 0,rgba(255,238,200,.55),rgba(255,238,200,0) 72%)}
+.arc-frame{position:absolute;left:50%;top:118px;width:170px;height:225px;transform:translate(-50%,-50%);background:url(../public/images/frame_gold.jpg) center/100% 100% no-repeat;box-shadow:0 26px 30px -16px rgba(60,40,10,.5),0 4px 10px rgba(60,40,10,.18);z-index:0;pointer-events:none}
+.arc-frame::after{content:'';position:absolute;left:50%;top:-18px;width:74px;height:7px;transform:translateX(-50%);border-radius:4px;background:linear-gradient(180deg,#E6CB8A,#B08A44 60%,#7E6130);box-shadow:0 2px 3px rgba(0,0,0,.25)}
 .arc-p{position:absolute;width:82px;height:108px;margin:-54px 0 0 -41px;border:none;padding:0;border-radius:14px;overflow:hidden;cursor:pointer;background:#D9D7D1;box-shadow:0 12px 24px rgba(0,0,0,.18);rotate:var(--r);scale:1;transition:scale .42s cubic-bezier(.2,.8,.2,1),box-shadow .3s,filter .3s,border-radius .3s;z-index:1}
 .arc-p img{width:100%;height:100%;object-fit:cover;display:block}
 .arc-p{filter:none}
 .arc:hover .arc-p:not(.on){filter:saturate(.55) brightness(.92)}
 .arc-p:not(.on):hover{scale:1.08}
-.arc-p.on{scale:1.5;border-radius:0;box-shadow:0 1px 3px rgba(0,0,0,.3);z-index:4}
+.arc-p.on{scale:1.48;border-radius:0;box-shadow:0 1px 2px rgba(0,0,0,.28);z-index:4}
 .arc-no{position:absolute;left:6px;top:6px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;color:#fff;background:rgba(28,28,28,.7);border-radius:6px;padding:1px 6px}
 .arc-p.on .arc-no{opacity:0}
 .arc-no{transition:opacity .3s}
-.arc-c{position:absolute;left:50%;top:230px;transform:translateX(-50%);width:600px;max-width:90%;text-align:center;display:flex;flex-direction:column;align-items:center}
+.arc-c{position:absolute;left:50%;top:240px;transform:translateX(-50%);width:600px;max-width:90%;text-align:center;display:flex;flex-direction:column;align-items:center}
 .arc-k{font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.16em;color:#C8102E}
 .arc-body{display:flex;flex-direction:column;align-items:center;animation:arcIn .45s ease-out both}
 @keyframes arcIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -88,7 +87,6 @@ footer{margin-top:112px;background:#E2E1DD}
 .arc-go:hover{background:#C8102E;color:#fff}
 .arc-note{margin-top:10px;font-size:11px;color:#8A8A8A}
 @media (max-width:1000px){.arc-frame{display:none}.arc{height:auto;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding-bottom:16px}.arc-p{position:relative;left:auto!important;top:auto!important;margin:0;rotate:none!important;scale:1!important}.arc{background:none}.arc-c{position:static;transform:none;width:100%;max-width:none;order:-1;margin-bottom:12px}}
-
 </style>
 </head>
 <body>

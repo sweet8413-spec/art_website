@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import ExhibitionDetail from './components/ExhibitionDetail'
 import ExhibitionList from './components/ExhibitionList'
+import { EXHIBITIONS_PATH, getSearchQuery } from './lib/search'
 import Header from './components/Header'
 import HeroGallery from './components/HeroGallery'
 import PicksSection from './components/PicksSection'
@@ -38,7 +39,8 @@ function useHash() {
 export default function App() {
   const hash = useHash()
   if (hash === MONET_DETAIL) return <ExhibitionDetail />
-  if (hash === '#/exhibitions') return <ExhibitionList />
+  if (hash === EXHIBITIONS_PATH || hash.startsWith(`${EXHIBITIONS_PATH}?`))
+    return <ExhibitionList query={getSearchQuery(hash)} />
   return (
     <>
       <Header />
