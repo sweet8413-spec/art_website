@@ -40,13 +40,11 @@ export default function HeroGallery({ artworks }: Props) {
   }
 
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section className="hero" data-dark-hero aria-labelledby="hero-title">
       <div className="wrap hero__intro">
         <span className="hero__eyebrow">TODAY’S GALLERY · {TODAY_LABEL}</span>
         <h1 id="hero-title" className="hero__title">
-          지금 만날 수 있는 전시의
-          <br />
-          대표 작품을 먼저 둘러보세요
+          지금 열린 전시의 대표작 둘러보기
         </h1>
         <p className="hero__lead">
           마우스를 좌우로 움직여 둘러보세요. 그림 위 빨간 점을 누르면 감상 포인트를 볼 수 있어요.
@@ -125,27 +123,30 @@ export default function HeroGallery({ artworks }: Props) {
           </button>
         </div>
 
-        <div className="hero__ex">
-          <span className="hero__ex-label">
-            <span className="dot" style={{ width: 6, height: 6 }} aria-hidden="true" />
-            이 작품을 볼 수 있는 전시 · {cur.ex.status}
-          </span>
-          <strong className="hero__ex-name">{cur.ex.name}</strong>
-          <span className="hero__ex-venue">
-            {cur.ex.venue} · {cur.ex.period}
-          </span>
+        <div className="hero__ex-row">
+          <div className="hero__ex">
+            <span className="hero__ex-label">
+              <span className="dot" style={{ width: 6, height: 6 }} aria-hidden="true" />
+              이 작품을 볼 수 있는 전시 · {cur.ex.status}
+            </span>
+            <strong className="hero__ex-name">{cur.ex.name}</strong>
+            <span className="hero__ex-venue">
+              {cur.ex.venue} · {cur.ex.period}
+            </span>
+          </div>
+          <a href={cur.ex.name.startsWith('MONET 100') ? '#/exhibition/monet100' : '#'} className="btn-light">
+            전시 상세 바로가기 <ArrowRight />
+          </a>
         </div>
 
-        <a href="#" className="btn-light">
-          전시 상세 바로가기 <ArrowRight />
-        </a>
-
-        <div className="bars" aria-hidden="true">
-          {artworks.map((a, i) => (
-            <span key={a.title} className={i === active ? 'is-on' : undefined} />
-          ))}
+        <div className="hero__paging">
+          <div className="bars" aria-hidden="true">
+            {artworks.map((a, i) => (
+              <span key={a.title} className={i === active ? 'is-on' : undefined} />
+            ))}
+          </div>
+          <span className="hero__note">※ 진주 귀고리·별이 빛나는 밤의 전시 연결은 시안용 예시예요.</span>
         </div>
-        <span className="hero__note">※ 진주 귀고리·별이 빛나는 밤의 전시 연결은 시안용 예시예요.</span>
       </div>
     </section>
   )

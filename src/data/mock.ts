@@ -36,18 +36,6 @@ export const heroArtworks: HeroArtwork[] = [
     ex: { name: '사랑을 담아, 미셸 들라크루아 드림', venue: '롯데뮤지엄', period: '2026.12.4 – 2027.3.7', status: '12.4 오픈 · D-14' },
   },
   {
-    title: '별이 빛나는 밤',
-    artist: '빈센트 반 고흐',
-    year: '1889',
-    img: 'images/van-gogh_starry-night.jpg',
-    pos: '15% center',
-    points: [
-      { x: 63, y: 30, title: '소용돌이치는 하늘', text: '붓질 방향을 눈으로 따라가 보세요. 하늘 전체가 움직이는 것처럼 보여요.' },
-      { x: 15, y: 50, title: '불꽃처럼 솟은 나무', text: '사이프러스 나무가 땅과 하늘을 잇는 것처럼 높이 솟아 있어요.' },
-    ],
-    ex: { name: '반 고흐: 별과 사이프러스', venue: '서울시립미술관 서소문본관', period: '2026.11.1 – 2027.3.1', status: '진행중' },
-  },
-  {
     title: '까치',
     artist: '클로드 모네',
     year: '1868–1869',
@@ -58,6 +46,18 @@ export const heroArtworks: HeroArtwork[] = [
       { x: 40, y: 80, title: '파란 그림자', text: '모네는 눈 위 그림자를 회색이 아니라 파란색으로 칠했어요. 당시엔 낯설었지만 실제 빛을 더 닮았죠.' },
     ],
     ex: { name: 'MONET 100: 시대를 읽는 감각의 계보', venue: '신세계본점 더 헤리티지', period: '2026.12.5 – 2027.2.28', status: '12.5 오픈 · D-15' },
+  },
+  {
+    title: '별이 빛나는 밤',
+    artist: '빈센트 반 고흐',
+    year: '1889',
+    img: 'images/van-gogh_starry-night.jpg',
+    pos: '15% center',
+    points: [
+      { x: 63, y: 30, title: '소용돌이치는 하늘', text: '붓질 방향을 눈으로 따라가 보세요. 하늘 전체가 움직이는 것처럼 보여요.' },
+      { x: 15, y: 50, title: '불꽃처럼 솟은 나무', text: '사이프러스 나무가 땅과 하늘을 잇는 것처럼 높이 솟아 있어요.' },
+    ],
+    ex: { name: '반 고흐: 별과 사이프러스', venue: '서울시립미술관 서소문본관', period: '2026.11.1 – 2027.3.1', status: '진행중' },
   },
   {
     title: '성녀 카실다',
