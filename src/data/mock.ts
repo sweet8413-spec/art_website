@@ -15,7 +15,7 @@ export const heroArtworks: HeroArtwork[] = [
     title: '진주 귀고리를 한 소녀',
     artist: '요하네스 페르메이르',
     year: '1665년경',
-    img: '/images/vermeer_girl-with-a-pearl-earring.jpg',
+    img: 'images/vermeer_girl-with-a-pearl-earring.jpg',
     pos: 'center',
     points: [
       { x: 47, y: 60, title: '진주 귀고리', text: '윤곽선 없이 흰 물감 몇 번으로 반짝임만 찍었어요. 가까이 보면 진주가 거의 그려져 있지 않아요.' },
@@ -27,7 +27,7 @@ export const heroArtworks: HeroArtwork[] = [
     title: '포스터 속 겨울 파리',
     artist: '미셸 들라크루아',
     year: '전시 대표 이미지',
-    img: '/images/delacroix_work.jpg',
+    img: 'images/delacroix_work.jpg',
     pos: 'center',
     points: [
       { x: 52, y: 40, title: '광장의 크리스마스트리', text: '들라크루아가 그리는 파리는 늘 축제를 준비하는 것처럼 따뜻해요.' },
@@ -39,7 +39,7 @@ export const heroArtworks: HeroArtwork[] = [
     title: '별이 빛나는 밤',
     artist: '빈센트 반 고흐',
     year: '1889',
-    img: '/images/van-gogh_starry-night.jpg',
+    img: 'images/van-gogh_starry-night.jpg',
     pos: '15% center',
     points: [
       { x: 63, y: 30, title: '소용돌이치는 하늘', text: '붓질 방향을 눈으로 따라가 보세요. 하늘 전체가 움직이는 것처럼 보여요.' },
@@ -51,7 +51,7 @@ export const heroArtworks: HeroArtwork[] = [
     title: '까치',
     artist: '클로드 모네',
     year: '1868–1869',
-    img: '/images/monet_the-magpie.jpg',
+    img: 'images/monet_the-magpie.jpg',
     pos: '25% center',
     points: [
       { x: 15, y: 45, title: '울타리 위의 까치', text: '온통 하얀 풍경 속에서 유일하게 까만 점. 그림의 제목이자 주인공이에요.' },
@@ -63,7 +63,7 @@ export const heroArtworks: HeroArtwork[] = [
     title: '성녀 카실다',
     artist: '프란시스코 데 수르바란',
     year: '1635년경',
-    img: '/images/posters/zurbaran.jpg',
+    img: 'images/posters/zurbaran.jpg',
     pos: '35% center',
     points: [
       { x: 53, y: 82, title: '치마폭의 장미', text: '몰래 나르던 빵이 들키는 순간 장미로 변했다는 전설을 그렸어요.' },
@@ -74,33 +74,33 @@ export const heroArtworks: HeroArtwork[] = [
 ]
 
 export const picks: PickExhibition[] = [
-  { title: '현대카드 컬처프로젝트 31 웨인 티보 전', venue: 'DDP 뮤지엄', period: '2026.9.19 – 2027.2.21', img: '/images/posters/thiebaud.gif', imgAlt: '웨인 티보 전 포스터' },
-  { title: '피카소에서 키키 스미스까지: 모더니티의 초상', venue: '대구미술관', period: '2026.11.17 – 2027.3.14', img: '/images/posters/picasso_kiki.gif', imgAlt: '피카소에서 키키 스미스까지 포스터' },
-  { title: '스페인 미술 500년: 빛과 어둠의 연대기', venue: '예술의전당 한가람디자인미술관', period: '2026.9.22 – 2027.1.20', img: '/images/posters/spain.gif', imgAlt: '스페인 미술 500년 포스터' },
-  { title: '브래드 월스 사진전', venue: '그라운드시소 용산', period: '2026.9.11 – 2027.3.1', img: '/images/posters/walls.gif', imgAlt: '브래드 월스 사진전 포스터' },
+  { title: '현대카드 컬처프로젝트 31 웨인 티보 전', venue: 'DDP 뮤지엄', period: '2026.9.19 – 2027.2.21', img: 'images/posters/thiebaud.gif', imgAlt: '웨인 티보 전 포스터' },
+  { title: '피카소에서 키키 스미스까지: 모더니티의 초상', venue: '대구미술관', period: '2026.11.17 – 2027.3.14', img: 'images/posters/picasso_kiki.gif', imgAlt: '피카소에서 키키 스미스까지 포스터' },
+  { title: '스페인 미술 500년: 빛과 어둠의 연대기', venue: '예술의전당 한가람디자인미술관', period: '2026.9.22 – 2027.1.20', img: 'images/posters/spain.gif', imgAlt: '스페인 미술 500년 포스터' },
+  { title: '브래드 월스 사진전', venue: '그라운드시소 용산', period: '2026.9.11 – 2027.3.1', img: 'images/posters/walls.gif', imgAlt: '브래드 월스 사진전 포스터' },
 ]
 
 export const quizItems: QuizItem[] = [
   {
-    title: '모나리자', artist: '레오나르도 다 빈치, 1503–1519년경', img: '/images/da-vinci_mona-lisa.jpg', focus: 'center 18%',
+    title: '모나리자', artist: '레오나르도 다 빈치, 1503–1519년경', img: 'images/da-vinci_mona-lisa.jpg', focus: 'center 18%',
     question: '모나리자를 세계 최고로 만든 건 도둑이었다?',
     answer: '1911년 루브르에서 도난당했다가 2년 만에 되찾은 사건이 전 세계 신문에 실리면서, 모나리자는 가장 유명한 그림이 되었어요.',
     ex: '레오나르도 다 빈치: 르네상스의 미소', venue: '예술의전당 한가람미술관', dday: 'D-100',
   },
   {
-    title: '키스', artist: '구스타프 클림트, 1907–1908', img: '/images/klimt_the-kiss.jpg', focus: 'center 22%',
+    title: '키스', artist: '구스타프 클림트, 1907–1908', img: 'images/klimt_the-kiss.jpg', focus: 'center 22%',
     question: '이 그림에는 진짜 금이 들어 있다?',
     answer: '맞아요. 금세공사였던 아버지에게 배운 솜씨로, 클림트는 물감 위에 진짜 금박을 붙였어요. 그래서 조명에 따라 그림이 반짝여요.',
     ex: '클림트, 황금의 시대', venue: '국립현대미술관 덕수궁관', dday: 'D-86',
   },
   {
-    title: '이삭 줍기', artist: '장 프랑수아 밀레, 1857', img: '/images/millet_the-gleaners.jpg', focus: '36% center',
+    title: '이삭 줍기', artist: '장 프랑수아 밀레, 1857', img: 'images/millet_the-gleaners.jpg', focus: '36% center',
     question: '평화로운 시골 풍경, 사실은 불편한 그림이었다?',
     answer: '추수가 끝난 밭에서 떨어진 이삭을 줍는 건 가장 가난한 사람들의 일이었어요. 처음 공개됐을 때 가난을 대놓고 그렸다는 이유로 비판을 받았어요.',
     ex: '밀레와 바르비종의 하늘', venue: '부산시립미술관', dday: 'D-72',
   },
   {
-    title: '안개 바다 위의 방랑자', artist: '카스파르 다비트 프리드리히, 1818년경', img: '/images/friedrich_wanderer.jpg', focus: 'center 24%',
+    title: '안개 바다 위의 방랑자', artist: '카스파르 다비트 프리드리히, 1818년경', img: 'images/friedrich_wanderer.jpg', focus: 'center 24%',
     question: '이 남자는 왜 끝까지 뒤돌아 서 있을까?',
     answer: '화가가 일부러 얼굴을 감췄어요. 뒷모습만 보이니 우리가 그 사람 자리에 서서 같은 풍경을 바라보게 되죠. 이런 인물을 ‘뒤돌아선 인물’이라고 불러요.',
     ex: '낭만주의, 숭고한 풍경', venue: '대전시립미술관', dday: 'D-107',
@@ -111,10 +111,10 @@ export const endingSoon: CardSection = {
   title: '곧 끝나요',
   desc: '종료가 가까운 순서',
   items: [
-    { title: '상서, 컬렉션을 읽다', meta: '간송미술관 · ~ 2026.12.6', img: '/images/posters/sangseo.gif', imgAlt: '전시 포스터', tint: '#EDE6DA', badge: { label: 'D-16', tone: 'red' }, end: { year: 2026, month: 12, day: 6 }, reason: '간송 컬렉션 속 길한 상징을 한자리에서 보는 드문 기회예요.' },
-    { title: '헤일리 티프먼, 일상을 그리다', meta: '포디움다이브 광안(부산) · ~ 2026.12.20', img: '/images/posters/tiffman.gif', imgAlt: '전시 포스터', tint: '#ECE3E6', badge: { label: 'D-30', tone: 'red' }, end: { year: 2026, month: 12, day: 20 }, reason: '친구들과의 평범한 순간을 선명한 색으로 그린 원화를 부산에서 직접 볼 수 있어요.' },
-    { title: '대구간송미술관 특별전 겸재 정선', meta: '대구간송미술관 · ~ 2026.12.27', img: '/images/posters/gyeomjae.gif', imgAlt: '전시 포스터', tint: '#EDE6DA', badge: { label: 'D-37', tone: 'red' }, end: { year: 2026, month: 12, day: 27 }, reason: '교과서에서 보던 진경산수화를 원화의 붓 자국까지 가까이서 볼 수 있어요.' },
-    { title: '현대회화 하이라이트: 시대의 초상', meta: '글로벌세아 아트스페이스 · ~ 2027.1.9', img: '/images/posters/portrait.gif', imgAlt: '전시 포스터', tint: '#E6E6E1', badge: { label: 'D-50', tone: 'red' }, end: { year: 2027, month: 1, day: 9 }, reason: '한 전시에서 현대회화가 사람을 그려 온 방식의 변화를 한 번에 훑어볼 수 있어요.' },
+    { title: '상서, 컬렉션을 읽다', meta: '간송미술관 · ~ 2026.12.6', img: 'images/posters/sangseo.gif', imgAlt: '전시 포스터', tint: '#EDE6DA', badge: { label: 'D-16', tone: 'red' }, end: { year: 2026, month: 12, day: 6 }, reason: '간송 컬렉션 속 길한 상징을 한자리에서 보는 드문 기회예요.' },
+    { title: '헤일리 티프먼, 일상을 그리다', meta: '포디움다이브 광안(부산) · ~ 2026.12.20', img: 'images/posters/tiffman.gif', imgAlt: '전시 포스터', tint: '#ECE3E6', badge: { label: 'D-30', tone: 'red' }, end: { year: 2026, month: 12, day: 20 }, reason: '친구들과의 평범한 순간을 선명한 색으로 그린 원화를 부산에서 직접 볼 수 있어요.' },
+    { title: '대구간송미술관 특별전 겸재 정선', meta: '대구간송미술관 · ~ 2026.12.27', img: 'images/posters/gyeomjae.gif', imgAlt: '전시 포스터', tint: '#EDE6DA', badge: { label: 'D-37', tone: 'red' }, end: { year: 2026, month: 12, day: 27 }, reason: '교과서에서 보던 진경산수화를 원화의 붓 자국까지 가까이서 볼 수 있어요.' },
+    { title: '현대회화 하이라이트: 시대의 초상', meta: '글로벌세아 아트스페이스 · ~ 2027.1.9', img: 'images/posters/portrait.gif', imgAlt: '전시 포스터', tint: '#E6E6E1', badge: { label: 'D-50', tone: 'red' }, end: { year: 2027, month: 1, day: 9 }, reason: '한 전시에서 현대회화가 사람을 그려 온 방식의 변화를 한 번에 훑어볼 수 있어요.' },
   ],
 }
 
@@ -122,10 +122,10 @@ export const openingSoon: CardSection = {
   title: '곧 열려요',
   desc: '오픈 전에 미리 예매해 두세요',
   items: [
-    { title: '조르조 모란디 (GIORGIO MORANDI)', meta: '더현대 서울 ALT.1 · 2026.11.21 – 2027.3.1', img: '/images/posters/morandi.gif', imgAlt: '전시 포스터', tint: '#E6E6E1', badge: { label: 'D-1 오픈', tone: 'dark' } },
-    { title: '사랑을 담아, 미셸 들라크루아 드림', meta: '롯데뮤지엄 · 2026.12.4 – 2027.3.7', img: '/images/posters/delacroix.gif', imgAlt: '전시 포스터', tint: '#ECE3E6', badge: { label: 'D-14 오픈', tone: 'dark' } },
-    { title: 'MONET 100: 시대를 읽는 감각의 계보', meta: '신세계본점 더 헤리티지 · 2026.12.5 – 2027.2.28', img: '/images/posters/monet.gif', imgAlt: '전시 포스터', tint: '#E2E7EA', badge: { label: 'D-15 오픈', tone: 'dark' } },
-    { title: '미라, 봉인된 신비', meta: '예술의전당 서예박물관 · 2026.12.11 – 2027.4.11', img: '/images/posters/mummy.gif', imgAlt: '전시 포스터', tint: '#EDE6DA', badge: { label: 'D-21 오픈', tone: 'dark' } },
+    { title: '조르조 모란디 (GIORGIO MORANDI)', meta: '더현대 서울 ALT.1 · 2026.11.21 – 2027.3.1', img: 'images/posters/morandi.gif', imgAlt: '전시 포스터', tint: '#E6E6E1', badge: { label: 'D-1 오픈', tone: 'dark' } },
+    { title: '사랑을 담아, 미셸 들라크루아 드림', meta: '롯데뮤지엄 · 2026.12.4 – 2027.3.7', img: 'images/posters/delacroix.gif', imgAlt: '전시 포스터', tint: '#ECE3E6', badge: { label: 'D-14 오픈', tone: 'dark' } },
+    { title: 'MONET 100: 시대를 읽는 감각의 계보', meta: '신세계본점 더 헤리티지 · 2026.12.5 – 2027.2.28', img: 'images/posters/monet.gif', imgAlt: '전시 포스터', tint: '#E2E7EA', badge: { label: 'D-15 오픈', tone: 'dark' } },
+    { title: '미라, 봉인된 신비', meta: '예술의전당 서예박물관 · 2026.12.11 – 2027.4.11', img: 'images/posters/mummy.gif', imgAlt: '전시 포스터', tint: '#EDE6DA', badge: { label: 'D-21 오픈', tone: 'dark' } },
   ],
 }
 

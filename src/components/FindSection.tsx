@@ -90,7 +90,7 @@ export default function FindSection() {
             aria-label="그림에서 후지산 위치 누르기"
             onClick={onPick}
           >
-            <img src="/images/hokusai_great-wave.jpg" alt="가쓰시카 호쿠사이, 가나가와 해변의 높은 파도 아래" />
+            <img src="images/hokusai_great-wave.jpg" alt="가쓰시카 호쿠사이, 가나가와 해변의 높은 파도 아래" />
             {fd.st === 'idle' && (
               <span className="find__chip">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>

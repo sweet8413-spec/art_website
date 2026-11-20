@@ -5,7 +5,7 @@ export default function Header() {
     <header className="site-header">
       <div className="wrap site-header__inner">
         <a href="#" className="logo">
-          <img className="logo__img" src="/images/artside_logo.png" alt="ARTSIDE 아트사이드" />
+          <img className="logo__img" src="images/artside_logo.png" alt="ARTSIDE 아트사이드" />
         </a>
 
         <nav className="nav" aria-label="주 메뉴">
