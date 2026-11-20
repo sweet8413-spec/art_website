@@ -12,7 +12,7 @@ export default function EndingSoonSection({ section }: { section: CardSectionDat
       <SectionHeader id={titleId} title={section.title} desc={section.desc} />
       <div className="end-grid">
         {section.items.map((c) => (
-          <a key={c.title} href="#" className="end-card">
+          <a key={c.title} href="#/exhibition/monet100" className="end-card">
             <div className="end-card__top">
               <div className="end-card__row">
                 {c.badge && <span className="end-card__dday">{c.badge.label}</span>}

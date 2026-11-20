@@ -7,7 +7,7 @@ export default function PicksSection({ items }: { items: PickExhibition[] }) {
       <SectionHeader id="picks-title" title="이번 주 추천 전시" desc="에디터가 고른 이번 주의 전시" />
       <div className="grid">
         {items.map((c) => (
-          <a key={c.title} href="#" className="pick">
+          <a key={c.title} href="#/exhibition/monet100" className="pick">
             <div className="pick__img">
               <img src={c.img} alt={c.imgAlt} />
             </div>

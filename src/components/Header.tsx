@@ -22,7 +22,7 @@ export default function Header({ active = 'home' }: { active?: 'home' | 'exhibit
 
         <nav className="nav" aria-label="주 메뉴">
           <a href="#/" aria-current={active === 'home' ? 'page' : undefined}>홈</a>
-          <a href="#/" aria-current={active === 'exhibitions' ? 'page' : undefined}>전시</a>
+          <a href="#/exhibitions" aria-current={active === 'exhibitions' ? 'page' : undefined}>전시</a>
         </nav>
 
         {/* TODO(기능): 검색 기능 연결 */}

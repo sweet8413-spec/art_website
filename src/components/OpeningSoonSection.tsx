@@ -21,7 +21,7 @@ export default function OpeningSoonSection({ section }: { section: CardSectionDa
           const n = parseInt(dday.slice(2), 10)
           const soon = n <= 1 ? '내일 오픈' : n <= 7 ? '이번 주 오픈' : '오픈 예정'
           return (
-            <a key={c.title} href={c.title.startsWith('MONET 100') ? '#/exhibition/monet100' : '#'} className="tk">
+            <a key={c.title} href="#/exhibition/monet100" className="tk">
               <div className="tk__poster" style={{ background: c.tint }}>
                 <img src={c.img} alt={c.imgAlt} style={{ objectPosition: c.imgPos ?? 'center' }} />
               </div>

@@ -16,7 +16,7 @@ export default function SectionHeader({ id, title, desc, aside }: Props) {
         {desc && <span className="sh__desc">{desc}</span>}
       </div>
       {aside ?? (
-        <a href="#" className="sh__more">
+        <a href="#/exhibitions" className="sh__more">
           전체보기 →
         </a>
       )}

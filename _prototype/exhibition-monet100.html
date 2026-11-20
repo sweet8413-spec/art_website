@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
 <style>
+html{scroll-behavior:smooth}
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#1C1C1C;font-family:'Noto Sans KR',sans-serif}
 a{color:#1C1C1C}a:hover{color:#C8102E}
@@ -108,11 +109,11 @@ footer{margin-top:112px;background:#F4F3EF}
 <body>
 <header><div class="wrap hd">
 <a href="index.html" aria-label="아트사이드 홈"><img src="../public/images/artside_logo.png" alt="ARTSIDE 아트사이드" style="height:40px;width:auto;display:block"></a>
-<nav class="nav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="#" class="on" aria-current="page">전시</a></nav>
+<nav class="nav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="exhibitions.html" class="on" aria-current="page">전시</a></nav>
 <form class="search" onsubmit="return false"><label for="q" class="sr">전시 검색</label><input id="q" type="search" placeholder="전시명, 작가명, 장소"><button type="submit" aria-label="검색하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button></form>
 </div></header>
 <main>
-<div class="wrap"><nav class="crumb" aria-label="현재 위치"><a href="index.html">홈</a><span>/</span><a href="#">전시</a><span>/</span><span style="color:#1C1C1C">MONET 100</span></nav>
+<div class="wrap"><nav class="crumb" aria-label="현재 위치"><a href="index.html">홈</a><span>/</span><a href="exhibitions.html">전시</a><span>/</span><span style="color:#1C1C1C">MONET 100</span></nav>
 <section class="hero" id="hero"></section></div>
 <nav class="tabs" aria-label="상세 메뉴"><div class="wrap"><a href="#intro" class="on">전시 소개</a><a href="#works">작품 해설</a><a href="#visit">관람 정보</a></div></nav>
 <div class="wrap">
@@ -123,7 +124,7 @@ footer{margin-top:112px;background:#F4F3EF}
 <div class="thumbs" id="thumbs" role="tablist" aria-label="작품 선택"></div>
 <p class="note">※ 미디어 전시에서 실제로 다루는 작품 구성과 다를 수 있는 시안용 예시예요. 작품 이미지: Wikimedia Commons (퍼블릭 도메인)</p></section>
 <section class="sec" id="visit" aria-labelledby="visitT"><div class="sh"><h2 id="visitT">관람 정보</h2></div><div class="visit" id="visitBox"></div></section>
-<section class="sec" aria-labelledby="relT"><div class="sh"><h2 id="relT">함께 보면 좋은 전시</h2><a href="index.html" style="font-size:14px;color:#6E6E6E;text-decoration:none">전시 더 보기 →</a></div><div class="rel" id="relBox"></div></section>
+<section class="sec" aria-labelledby="relT"><div class="sh"><h2 id="relT">함께 보면 좋은 전시</h2><a href="exhibitions.html" style="font-size:14px;color:#6E6E6E;text-decoration:none">전시 더 보기 →</a></div><div class="rel" id="relBox"></div></section>
 </div>
 </main>
 <footer><div class="wrap" style="padding-top:40px;padding-bottom:56px;display:flex;gap:28px;align-items:center;flex-wrap:wrap;font-size:13px;color:#5E5E5E">
@@ -165,10 +166,138 @@ document.querySelector('.docent').addEventListener('click', e => { const b = e.t
 $('thumbs').addEventListener('wheel', e => { const s = $('thumbs'); if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; const max = s.scrollWidth - s.clientWidth; if ((e.deltaY > 0 && s.scrollLeft < max - 1) || (e.deltaY < 0 && s.scrollLeft > 0)) { e.preventDefault(); s.scrollLeft += e.deltaY; } }, { passive: false });
 renderWork();
 $('visitBox').innerHTML = D.visit.map(([t, b]) => `<div><strong>${esc(t)}</strong><p>${esc(b)}</p></div>`).join('');
-$('relBox').innerHTML = D.related.map(r => `<a href="#"><img src="${P + r.img}" alt="${esc(r.title)} 포스터"><span><strong>${esc(r.title)}</strong><span>${esc(r.meta)}</span></span></a>`).join('');
+$('relBox').innerHTML = D.related.map(r => `<a href="exhibition-monet100.html"><img src="${P + r.img}" alt="${esc(r.title)} 포스터"><span><strong>${esc(r.title)}</strong><span>${esc(r.meta)}</span></span></a>`).join('');
 const tabs = [...document.querySelectorAll('.tabs a')];
 const secs = tabs.map(a => document.querySelector(a.getAttribute('href')));
 addEventListener('scroll', () => { let k = 0; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < 100) k = i; }); tabs.forEach((a, i) => a.classList.toggle('on', i === k)); }, { passive: true });
+</script>
+<script>
+(function () {
+  if (window.__artsideSmooth) return; window.__artsideSmooth = true;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var target = window.scrollY, cur = window.scrollY, raf = 0;
+  function max() { return document.documentElement.scrollHeight - window.innerHeight; }
+  function innerScroller(el) {
+    while (el && el !== document.body && el !== document.documentElement) {
+      var cs = getComputedStyle(el);
+      if (/(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 1) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+  function step() {
+    cur += (target - cur) * 0.12;
+    if (Math.abs(target - cur) < 0.5) { cur = target; window.scrollTo({ top: cur, behavior: 'instant' }); raf = 0; return; }
+    window.scrollTo({ top: cur, behavior: 'instant' });
+    raf = requestAnimationFrame(step);
+  }
+  window.addEventListener('wheel', function (e) {
+    if (e.defaultPrevented || e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    if (innerScroller(e.target)) return;
+    e.preventDefault();
+    if (!raf) { target = cur = window.scrollY; }
+    target = Math.max(0, Math.min(max(), target + e.deltaY * (e.deltaMode === 1 ? 40 : 1)));
+    if (!raf) raf = requestAnimationFrame(step);
+  }, { passive: false });
+  window.addEventListener('scroll', function () { if (!raf) { target = cur = window.scrollY; } }, { passive: true });
+})();
+</script>
+<script>
+(function () {
+  if (window.__artsideReveal) return; window.__artsideReveal = true;
+  var css = document.createElement('style');
+  css.textContent = '@keyframes rvIn{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}' +
+    '[data-reveal]:not([data-revealed]){opacity:0}' +
+    '[data-revealed]{animation:rvIn .9s cubic-bezier(.2,.7,.2,1) both}' +
+    '[data-rv-d="1"]{animation-delay:.08s}[data-rv-d="2"]{animation-delay:.16s}[data-rv-d="3"]{animation-delay:.24s}[data-rv-d="4"]{animation-delay:.32s}[data-rv-d="5"]{animation-delay:.4s}' +
+    '@media (prefers-reduced-motion: reduce){[data-reveal]:not([data-revealed]){opacity:1}[data-revealed]{animation:none}}';
+  document.head.appendChild(css);
+  var SKIP = 'header, nav, footer, [role="tablist"], [role="group"], section[aria-labelledby="w-today"], section.hero, [data-dark-hero], [data-no-reveal]';
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target, sibs = [], i, p = el.parentElement;
+      if (p) for (i = 0; i < p.children.length; i++) if (p.children[i].hasAttribute('data-reveal') && !p.children[i].hasAttribute('data-revealed')) sibs.push(p.children[i]);
+      el.setAttribute('data-rv-d', String(Math.max(0, Math.min(5, sibs.indexOf(el)))));
+      el.setAttribute('data-revealed', '');
+      io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 }) : null;
+  function qualifies(el) {
+    if (el.parentElement && el.parentElement.closest('[data-reveal]')) return false;
+    if (el.closest(SKIP)) return false;
+    if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return false;
+    for (var k = 0; k < el.children.length; k++) if (el.children[k].tagName === 'H2') return true;
+    var p = el.parentElement; if (!p) return false;
+    var cs = getComputedStyle(p);
+    var item = cs.display === 'grid' || (cs.display === 'flex' && cs.flexWrap === 'wrap' && cs.flexDirection === 'row');
+    if (!item) return false;
+    var r = el.getBoundingClientRect();
+    return r.height >= 60 && r.width >= 120;
+  }
+  var pending = false;
+  function scan() {
+    pending = false;
+    var root = document.querySelector('main') || document.body;
+    var all = root.querySelectorAll('*');
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.hasAttribute('data-reveal')) continue;
+      if (!qualifies(el)) continue;
+      el.setAttribute('data-reveal', '');
+      if (io) io.observe(el); else el.setAttribute('data-revealed', '');
+    }
+  }
+  function schedule() { if (!pending) { pending = true; requestAnimationFrame(scan); } }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule); else schedule();
+  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+  setTimeout(schedule, 600);
+})();
+</script>
+<script>
+(function () {
+  if (window.__artsideCount) return; window.__artsideCount = true;
+  var RE = /D-(\\d+)/;
+  var seen = new WeakSet();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(node) {
+    var m = RE.exec(node.nodeValue); if (!m) return;
+    var target = parseInt(m[1], 10), t0 = performance.now(), dur = Math.min(1400, 600 + target * 8);
+    function frame(now) {
+      var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      var cur = node.nodeValue, mm = RE.exec(cur); if (!mm) return;
+      node.nodeValue = cur.replace(RE, 'D-' + Math.round(target * e));
+      if (p < 1) requestAnimationFrame(frame); else node.nodeValue = cur.replace(RE, 'D-' + target);
+    }
+    node.nodeValue = node.nodeValue.replace(RE, 'D-0');
+    requestAnimationFrame(frame);
+  }
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      (en.target.__cuNodes || []).forEach(run);
+      en.target.__cuNodes = [];
+    });
+  }, { threshold: 0.6 }) : null;
+  var pending = false;
+  function scan() {
+    pending = false;
+    if (reduce || !io) return;
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = w.nextNode())) {
+      if (seen.has(n) || !RE.test(n.nodeValue)) continue;
+      var el = n.parentElement; if (!el || el.closest('script, style, header, nav')) continue;
+      seen.add(n);
+      (el.__cuNodes = el.__cuNodes || []).push(n);
+      io.observe(el);
+    }
+  }
+  function schedule() { if (!pending) { pending = true; requestAnimationFrame(scan); } }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule); else schedule();
+  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+  setTimeout(schedule, 700);
+})();
 </script>
 </body>
 </html>

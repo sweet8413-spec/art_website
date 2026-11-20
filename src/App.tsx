@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import ExhibitionDetail from './components/ExhibitionDetail'
+import ExhibitionList from './components/ExhibitionList'
 import Header from './components/Header'
 import HeroGallery from './components/HeroGallery'
 import PicksSection from './components/PicksSection'
@@ -24,7 +25,10 @@ export const MONET_DETAIL = '#/exhibition/monet100'
 function useHash() {
   const [hash, setHash] = useState(window.location.hash)
   useEffect(() => {
-    const on = () => setHash(window.location.hash)
+    const on = () => {
+      setHash(window.location.hash)
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
     window.addEventListener('hashchange', on)
     return () => window.removeEventListener('hashchange', on)
   }, [])
@@ -34,6 +38,7 @@ function useHash() {
 export default function App() {
   const hash = useHash()
   if (hash === MONET_DETAIL) return <ExhibitionDetail />
+  if (hash === '#/exhibitions') return <ExhibitionList />
   return (
     <>
       <Header />

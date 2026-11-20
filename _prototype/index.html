@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
 <style>
+html{scroll-behavior:smooth}
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#1C1C1C;font-family:'Noto Sans KR',sans-serif}
 a{color:#1C1C1C}a:hover{color:#C8102E}
@@ -72,6 +73,10 @@ header.dark .search{border-bottom-color:rgba(255,255,255,.45)}header.dark .searc
 .qcard.on .front{pointer-events:none}.qcard:not(.on) .back{pointer-events:none}
 .back{background:#fff;border:1px solid #1C1C1C;padding:24px;display:flex;flex-direction:column;text-align:left;transform:rotateY(180deg)}
 footer{margin-top:112px;background:#F4F3EF}
+.qwrap:not(.is-on):hover .qinner{transform:rotateY(14deg) !important}
+.qwrap:not(.is-on):hover .qinner .qfront{box-shadow:-14px 18px 30px rgba(0,0,0,.25)}
+.qflip-ic{position:absolute;right:16px;top:16px;z-index:3;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:#fff;transition:transform .6s cubic-bezier(.2,.7,.2,1),background .3s}
+.qwrap:hover .qflip-ic{transform:rotateY(180deg);background:rgba(255,255,255,.3)}
 .end-card:hover .end-img{transform:scale(1.04)}
 .end-card:hover .end-bar{background:#C8102E}
 .tk:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.10)}
@@ -92,7 +97,7 @@ footer{margin-top:112px;background:#F4F3EF}
 <body>
 <header class="dark" id="siteHeader"><div class="wrap hd">
 <a href="#" class="logo"><img class="logo-b" src="../public/images/artside_logo.png" alt="ARTSIDE 아트사이드" style="height: 40px; width: auto; display: block"><img class="logo-w" src="../public/images/artside_logo_white.png" alt="ARTSIDE 아트사이드" style="height: 40px; width: auto; display: block"></a>
-<nav class="nav" aria-label="주 메뉴"><a href="#" aria-current="page" style="font-weight:700;border-bottom:1px solid #1C1C1C">홈</a><a href="#" style="color:#6E6E6E">전시</a></nav>
+<nav class="nav" aria-label="주 메뉴"><a href="#" aria-current="page" style="font-weight:700;border-bottom:1px solid #1C1C1C">홈</a><a href="exhibitions.html" style="color:#6E6E6E">전시</a></nav>
 <form class="search" onsubmit="return false"><label for="q" class="sr">전시 검색</label><input id="q" type="search" placeholder="전시명, 작가명, 장소"><button type="submit" aria-label="검색하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button></form>
 </div></header>
 
@@ -124,7 +129,7 @@ footer{margin-top:112px;background:#F4F3EF}
 </section>
 
 <section class="wrap sec" aria-labelledby="pickT">
-<div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2 id="pickT">이번 주 추천 전시</h2><span class="desc">에디터가 고른 이번 주의 전시</span></div><a href="#" class="more">전체보기 →</a></div>
+<div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2 id="pickT">이번 주 추천 전시</h2><span class="desc">에디터가 고른 이번 주의 전시</span></div><a href="exhibitions.html" class="more">전체보기 →</a></div>
 <div class="grid" id="picks"></div>
 </section>
 
@@ -218,7 +223,7 @@ function layout() {
   $('curArtist').textContent = `${a.artist} · ${a.year}`;
   $('curStatus').textContent = a.ex.status;
   $('curEx').textContent = a.ex.name;
-  $('heroLink').href = a.ex.name.startsWith('MONET 100') ? 'exhibition-monet100.html' : '#';
+  $('heroLink').href = 'exhibition-monet100.html';
   $('curVenue').textContent = `${a.ex.venue} · ${a.ex.period}`;
 }
 function closePins() {
@@ -243,7 +248,7 @@ $('next').onclick = () => aim(cur + 1);
 layout();
 
 /* ---------- picks ---------- */
-$('picks').innerHTML = DATA.picks.map(c => `<a href="#" class="pick">
+$('picks').innerHTML = DATA.picks.map(c => `<a href="exhibition-monet100.html" class="pick">
 <div class="im"><img src="${c.img}" alt="${esc(c.imgAlt)}"></div>
 <div style="position:relative;width:84%;margin-top:-64px;background:#fff;padding:18px 20px 0 0;display:flex;flex-direction:column;gap:8px">
 <span class="serif" style="font-style:italic;font-size:13px;color:#7D6A4D">${esc(c.period)}</span>
@@ -252,29 +257,29 @@ $('picks').innerHTML = DATA.picks.map(c => `<a href="#" class="pick">
 <span style="display:flex;align-items:center;gap:14px;margin-top:18px;font-size:13px"><span class="line" aria-hidden="true"></span>전시 보기</span></a>`).join('');
 
 /* ---------- quiz ---------- */
-$('quiz').innerHTML = DATA.quiz.map((q, k) => `<div class="qcard"><div class="qin">
-<button type="button" class="face front" data-flip aria-label="${esc(q.q)} 답 보기">
+$('quiz').innerHTML = DATA.quiz.map((q, k) => `<div class="qcard qwrap"><div class="qin qinner">
+<button type="button" class="face front qfront" data-flip aria-label="${esc(q.q)} 답 보기">
 <img src="${q.img}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${q.focus};filter:brightness(.8)">
 <span style="position:absolute;left:0;right:0;bottom:0;padding:24px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.82) 38%)">
 <span style="font-size:11px;letter-spacing:.2em;color:#E2E0DA">QUESTION 0${k+1}</span>
 <span class="serif" style="font-size:22px;font-weight:700;line-height:1.45">${esc(q.q)}</span>
-<span style="display:flex;align-items:center;gap:10px;font-size:13px"><span aria-hidden="true" style="width:26px;height:26px;border-radius:50%;border:1px solid #fff;display:flex;align-items:center;justify-content:center">?</span>눌러서 답 보기</span></span></button>
+<span style="display:flex;align-items:center;gap:10px;font-size:13px"><span aria-hidden="true" style="width:26px;height:26px;border-radius:50%;border:1px solid #fff;display:flex;align-items:center;justify-content:center">?</span>눌러서 답 보기</span></span><span class="qflip-ic" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8M20 4v4h-4M20 12a8 8 0 0 1-13.7 5.7L4 16M4 20v-4h4"></path></svg></span></button>
 <div class="face back">
 <span style="font-size:11px;font-weight:700;letter-spacing:.2em;color:#C8102E">ANSWER 0${k+1}</span>
 <strong class="serif" style="display:block;margin-top:10px;font-size:18px;font-weight:700;line-height:1.4;text-align:left">${esc(q.title)}</strong>
 <span style="margin-top:4px;font-size:12px;color:#6E6E6E">${esc(q.artist)}</span>
 <p style="margin:14px 0 0;padding-top:14px;border-top:1px solid #E2E0DA;font-size:14px;line-height:1.7;flex:1 1 auto">${esc(q.a)}</p>
-<a href="#" style="display:flex;flex-direction:column;gap:4px;background:#1C1C1C;color:#fff;text-decoration:none;padding:12px 14px;margin-top:12px">
-<span style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;color:#C9C7C1"><span>이 작품, 지금 볼 수 있어요</span><span style="background:#C8102E;color:#fff;font-weight:700;letter-spacing:0;padding:2px 8px">${esc(q.dday)}</span></span>
+<a href="exhibition-monet100.html" style="display:flex;flex-direction:column;gap:4px;background:#1C1C1C;color:#fff;text-decoration:none;padding:12px 14px;margin-top:12px">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;letter-spacing:.06em;color:#C9C7C1"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">지금 볼 수 있는 전시</span><span style="flex:0 0 auto;white-space:nowrap;background:#C8102E;color:#fff;font-weight:700;letter-spacing:0;padding:2px 8px">${esc(q.dday)}</span></span>
 <strong style="font-size:14px;font-weight:700;line-height:1.4">${esc(q.ex)}</strong>
-<span style="display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#C9C7C1"><span>${esc(q.venue)}</span><span style="color:#fff">전시 보기 →</span></span></a>
+<span style="display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#C9C7C1"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">${esc(q.venue)}</span><span style="flex:0 0 auto;white-space:nowrap;color:#fff">전시 보기 →</span></span></a>
 <button type="button" data-flip style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;border:none;background:transparent;color:#1C1C1C;font:inherit;font-size:13px;padding:0;margin-top:12px;min-height:28px;cursor:pointer"><span aria-hidden="true" style="width:26px;height:26px;border-radius:50%;border:1px solid #1C1C1C;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"></path></svg></span>질문 다시 보기</button>
 </div></div></div>`).join('');
-$('quiz').addEventListener('click', e => { const f = e.target.closest('[data-flip]'); if (f) f.closest('.qcard').classList.toggle('on'); });
+$('quiz').addEventListener('click', e => { const f = e.target.closest('[data-flip]'); if (f) { const c = f.closest('.qcard'); c.classList.toggle('on'); c.classList.toggle('is-on'); } });
 
 /* ---------- card sections ---------- */
-const sectionHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">${esc(sec.desc)}</span></div><a href="#" class="more">전체보기 →</a></div>
-<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:44px 28px">` + sec.items.map(c => `<a href="#" class="card">
+const sectionHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">${esc(sec.desc)}</span></div><a href="exhibitions.html" class="more">전체보기 →</a></div>
+<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:44px 28px">` + sec.items.map(c => `<a href="exhibition-monet100.html" class="card">
 <div class="poster" style="background:${c.tint}">` + (c.hasImg ? `<img src="${c.img}" alt="${esc(c.imgAlt)}" style="object-position:${c.imgPos}">` : `<div style="width:100%;height:100%;border:1px solid #CFC8BC;display:flex;align-items:flex-end;padding:16px"><span class="serif" style="font-size:20px;font-weight:700;line-height:1.3">${esc(c.short)}</span></div>`) +
   (c.hasBadge ? `<span class="badge" style="background:${c.badgeBg}">${esc(c.badge)}</span>` : '') + `</div>` +
   (c.hasKicker ? `<span style="font-size:12px;letter-spacing:.14em;color:#6E6E6E">${esc(c.kicker)}</span>` : '') +
@@ -285,8 +290,8 @@ const REASONS = {
   '대구간송미술관 특별전 겸재 정선': '교과서에서 보던 진경산수화를 원화의 붓 자국까지 가까이서 볼 수 있어요.',
   '현대회화 하이라이트: 시대의 초상': '한 전시에서 현대회화가 사람을 그려 온 방식의 변화를 한 번에 훑어볼 수 있어요.'
 };
-const endHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">${esc(sec.desc)}</span></div><a href="#" class="more">전체보기 →</a></div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px">` + sec.items.map(c => { const m = c.meta.match(/(\d{4})\.(\d+)\.(\d+)\s*$/); const wd = '일월화수목금토'[new Date(+m[1], +m[2] - 1, +m[3]).getDay()]; return `<a href="#" class="end-card" style="display:flex;flex-direction:column;text-decoration:none;color:#1C1C1C;background:#F4F3EF">
+const endHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">${esc(sec.desc)}</span></div><a href="exhibitions.html" class="more">전체보기 →</a></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px">` + sec.items.map(c => { const m = c.meta.match(/(\d{4})\.(\d+)\.(\d+)\s*$/); const wd = '일월화수목금토'[new Date(+m[1], +m[2] - 1, +m[3]).getDay()]; return `<a href="exhibition-monet100.html" class="end-card" style="display:flex;flex-direction:column;text-decoration:none;color:#1C1C1C;background:#F4F3EF">
 <div style="padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px;flex:1 1 auto">
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px"><span class="serif" style="font-size:56px;font-weight:700;line-height:.9;letter-spacing:-.02em;color:#1C1C1C">${esc(c.badge)}</span><span style="font-size:12px;line-height:1.4;color:#6E6E6E;text-align:right">${m[2]}월 ${m[3]}일 (${wd})<br>종료</span></div>
 <strong style="font-size:16px;font-weight:700;line-height:1.5;min-height:48px">${esc(c.title)}</strong>
@@ -295,9 +300,9 @@ const endHTML = sec => `<section class="wrap sec"><div class="sh"><div style="di
 <div style="aspect-ratio:4/3;overflow:hidden;background:${c.tint}"><img class="end-img" src="${c.img}" alt="${esc(c.imgAlt)}" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .6s ease"></div>
 <span class="end-bar" style="display:flex;align-items:center;justify-content:center;height:44px;background:#1C1C1C;color:#fff;font-size:13px;transition:background .2s ease">전시 보기 →</span></a>`; }).join('') + `</div></section>`;
 $('secA').innerHTML = DATA.sectionsA.map(endHTML).join('');
-const openHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">오픈 전에 미리 예매해 두세요</span></div><a href="#" class="more">전체보기 →</a></div>
+const openHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">오픈 전에 미리 예매해 두세요</span></div><a href="exhibitions.html" class="more">전체보기 →</a></div>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(520px,100%),1fr));gap:28px">` + sec.items.map(c => { const m = c.meta.match(/(\d{4})\.(\d+)\.(\d+)\s*–/); const wd = '일월화수목금토'[new Date(+m[1], +m[2] - 1, +m[3]).getDay()]; const dd = c.badge.replace(' 오픈', ''); const n = parseInt(dd.slice(2), 10); const [venue, period] = c.meta.split(' · ');
-  return `<a href="${c.title.startsWith('MONET 100') ? 'exhibition-monet100.html' : '#'}" class="tk" style="position:relative;display:flex;min-height:224px;background:#F4F3EF;text-decoration:none;color:#1C1C1C;transition:transform .25s ease,box-shadow .25s ease">
+  return `<a href="exhibition-monet100.html" class="tk" style="position:relative;display:flex;min-height:224px;background:#F4F3EF;text-decoration:none;color:#1C1C1C;transition:transform .25s ease,box-shadow .25s ease">
 <div style="flex:0 0 160px;overflow:hidden;background:${c.tint}"><img src="${c.img}" alt="${esc(c.imgAlt)}" style="width:100%;height:100%;object-fit:cover;object-position:${c.imgPos};display:block"></div>
 <div style="flex:1 1 auto;min-width:0;padding:24px;display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;letter-spacing:.12em;color:#7D6A4D">OPENING · ${m[2]}월 ${m[3]}일 (${wd})</span><strong class="serif" style="font-size:20px;font-weight:700;line-height:1.4">${esc(c.title)}</strong><span style="font-size:13px;line-height:1.6;color:#6E6E6E">${esc(venue)}<br>${esc(period)}</span><span class="tk-cta" style="margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:#1C1C1C;color:#fff;font-size:13px;font-weight:500;padding:10px 16px;transition:background .2s ease">미리 예매하기 →</span></div>
 <div style="position:relative;flex:0 0 116px;border-left:2px dashed #CFC8BC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center"><span aria-hidden="true" style="position:absolute;left:-11px;top:-10px;width:20px;height:20px;border-radius:50%;background:#fff"></span><span aria-hidden="true" style="position:absolute;left:-11px;bottom:-10px;width:20px;height:20px;border-radius:50%;background:#fff"></span><span style="font-size:11px;letter-spacing:.2em;color:#6E6E6E">OPEN IN</span><strong class="serif" style="font-size:40px;font-weight:700;line-height:1">${dd}</strong><span style="font-size:12px;font-weight:700;color:${n <= 1 ? '#C8102E' : '#6E6E6E'}">${n <= 1 ? '내일 오픈' : n <= 7 ? '이번 주 오픈' : '오픈 예정'}</span></div></a>`; }).join('') + `</div></section>`;
@@ -401,7 +406,7 @@ ${C.weeks.map(w => `<div style="display:grid;grid-template-columns:repeat(7,1fr)
 <div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column">
 <div style="display:flex;align-items:baseline;justify-content:space-between;padding:28px 28px 16px"><strong class="serif" style="font-size:20px;font-weight:700">전시 일정</strong><span style="font-size:13px;color:#6E6E6E">${C.count}</span></div>
 <div id="cal-list" style="position:relative;height:430px;overflow-y:auto;padding:0 20px 20px 28px">
-${C.list.map(e => `<a href="#" id="${e.id}" style="display:flex;align-items:stretch;gap:20px;padding:18px 12px 18px 0;border-top:1px solid #EEECE7;text-decoration:none;color:#1C1C1C;background:${e.bg};opacity:${e.op};transition:background .3s ease">
+${C.list.map(e => `<a href="exhibition-monet100.html" id="${e.id}" style="display:flex;align-items:stretch;gap:20px;padding:18px 12px 18px 0;border-top:1px solid #EEECE7;text-decoration:none;color:#1C1C1C;background:${e.bg};opacity:${e.op};transition:background .3s ease">
 <span style="flex:0 0 64px;display:flex;flex-direction:column;gap:4px;padding-left:12px"><strong class="serif" style="font-size:26px;font-weight:700;line-height:1">${e.day}</strong><span style="font-size:12px;color:#6E6E6E">${e.sub}</span><span style="align-self:flex-start;margin-top:4px;background:${e.kindBg};color:#fff;font-size:11px;font-weight:700;padding:2px 7px">${e.kind}</span></span>
 <span aria-hidden="true" style="flex:0 0 2px;background:${e.bar}"></span>
 <span style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:5px"><span style="font-size:12px;color:#7D6A4D">${esc(e.venue)}</span><strong style="font-size:16px;font-weight:700;line-height:1.4">${esc(e.title)}</strong><span style="font-size:13px;line-height:1.6;color:#8A8A8A;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(e.desc)}</span></span>
@@ -415,6 +420,134 @@ $('calBox').addEventListener('click', e => {
   else if (d) { calD = Number(d.dataset.day); renderCal(true); calScroll(calM, calD); }
 });
 renderCal(false);
+</script>
+<script>
+(function () {
+  if (window.__artsideSmooth) return; window.__artsideSmooth = true;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var target = window.scrollY, cur = window.scrollY, raf = 0;
+  function max() { return document.documentElement.scrollHeight - window.innerHeight; }
+  function innerScroller(el) {
+    while (el && el !== document.body && el !== document.documentElement) {
+      var cs = getComputedStyle(el);
+      if (/(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 1) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+  function step() {
+    cur += (target - cur) * 0.12;
+    if (Math.abs(target - cur) < 0.5) { cur = target; window.scrollTo({ top: cur, behavior: 'instant' }); raf = 0; return; }
+    window.scrollTo({ top: cur, behavior: 'instant' });
+    raf = requestAnimationFrame(step);
+  }
+  window.addEventListener('wheel', function (e) {
+    if (e.defaultPrevented || e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    if (innerScroller(e.target)) return;
+    e.preventDefault();
+    if (!raf) { target = cur = window.scrollY; }
+    target = Math.max(0, Math.min(max(), target + e.deltaY * (e.deltaMode === 1 ? 40 : 1)));
+    if (!raf) raf = requestAnimationFrame(step);
+  }, { passive: false });
+  window.addEventListener('scroll', function () { if (!raf) { target = cur = window.scrollY; } }, { passive: true });
+})();
+</script>
+<script>
+(function () {
+  if (window.__artsideReveal) return; window.__artsideReveal = true;
+  var css = document.createElement('style');
+  css.textContent = '@keyframes rvIn{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}' +
+    '[data-reveal]:not([data-revealed]){opacity:0}' +
+    '[data-revealed]{animation:rvIn .9s cubic-bezier(.2,.7,.2,1) both}' +
+    '[data-rv-d="1"]{animation-delay:.08s}[data-rv-d="2"]{animation-delay:.16s}[data-rv-d="3"]{animation-delay:.24s}[data-rv-d="4"]{animation-delay:.32s}[data-rv-d="5"]{animation-delay:.4s}' +
+    '@media (prefers-reduced-motion: reduce){[data-reveal]:not([data-revealed]){opacity:1}[data-revealed]{animation:none}}';
+  document.head.appendChild(css);
+  var SKIP = 'header, nav, footer, [role="tablist"], [role="group"], section[aria-labelledby="w-today"], section.hero, [data-dark-hero], [data-no-reveal]';
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target, sibs = [], i, p = el.parentElement;
+      if (p) for (i = 0; i < p.children.length; i++) if (p.children[i].hasAttribute('data-reveal') && !p.children[i].hasAttribute('data-revealed')) sibs.push(p.children[i]);
+      el.setAttribute('data-rv-d', String(Math.max(0, Math.min(5, sibs.indexOf(el)))));
+      el.setAttribute('data-revealed', '');
+      io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 }) : null;
+  function qualifies(el) {
+    if (el.parentElement && el.parentElement.closest('[data-reveal]')) return false;
+    if (el.closest(SKIP)) return false;
+    if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') return false;
+    for (var k = 0; k < el.children.length; k++) if (el.children[k].tagName === 'H2') return true;
+    var p = el.parentElement; if (!p) return false;
+    var cs = getComputedStyle(p);
+    var item = cs.display === 'grid' || (cs.display === 'flex' && cs.flexWrap === 'wrap' && cs.flexDirection === 'row');
+    if (!item) return false;
+    var r = el.getBoundingClientRect();
+    return r.height >= 60 && r.width >= 120;
+  }
+  var pending = false;
+  function scan() {
+    pending = false;
+    var root = document.querySelector('main') || document.body;
+    var all = root.querySelectorAll('*');
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.hasAttribute('data-reveal')) continue;
+      if (!qualifies(el)) continue;
+      el.setAttribute('data-reveal', '');
+      if (io) io.observe(el); else el.setAttribute('data-revealed', '');
+    }
+  }
+  function schedule() { if (!pending) { pending = true; requestAnimationFrame(scan); } }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule); else schedule();
+  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+  setTimeout(schedule, 600);
+})();
+</script>
+<script>
+(function () {
+  if (window.__artsideCount) return; window.__artsideCount = true;
+  var RE = /D-(\d+)/;
+  var seen = new WeakSet();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(node) {
+    var m = RE.exec(node.nodeValue); if (!m) return;
+    var target = parseInt(m[1], 10), t0 = performance.now(), dur = Math.min(1400, 600 + target * 8);
+    function frame(now) {
+      var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      var cur = node.nodeValue, mm = RE.exec(cur); if (!mm) return;
+      node.nodeValue = cur.replace(RE, 'D-' + Math.round(target * e));
+      if (p < 1) requestAnimationFrame(frame); else node.nodeValue = cur.replace(RE, 'D-' + target);
+    }
+    node.nodeValue = node.nodeValue.replace(RE, 'D-0');
+    requestAnimationFrame(frame);
+  }
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      (en.target.__cuNodes || []).forEach(run);
+      en.target.__cuNodes = [];
+    });
+  }, { threshold: 0.6 }) : null;
+  var pending = false;
+  function scan() {
+    pending = false;
+    if (reduce || !io) return;
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = w.nextNode())) {
+      if (seen.has(n) || !RE.test(n.nodeValue)) continue;
+      var el = n.parentElement; if (!el || el.closest('script, style, header, nav')) continue;
+      seen.add(n);
+      (el.__cuNodes = el.__cuNodes || []).push(n);
+      io.observe(el);
+    }
+  }
+  function schedule() { if (!pending) { pending = true; requestAnimationFrame(scan); } }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule); else schedule();
+  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+  setTimeout(schedule, 700);
+})();
 </script>
 </body>
 </html>

@@ -51,7 +51,7 @@ export default function ExhibitionDetail() {
   }
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, behavior: 'instant' })
     const onScroll = () => {
       let k = TABS[0].id
       TABS.forEach((t) => {
@@ -76,7 +76,7 @@ export default function ExhibitionDetail() {
       <main className="detail">
         <div className="wrap">
           <nav className="crumb" aria-label="현재 위치">
-            <a href="#/">홈</a><span>/</span><a href="#/">전시</a><span>/</span><span className="crumb__cur">{ex.title}</span>
+            <a href="#/">홈</a><span>/</span><a href="#/exhibitions">전시</a><span>/</span><span className="crumb__cur">{ex.title}</span>
           </nav>
           <section className="dhero">
             <div className="dhero__poster"><img src={img(ex.poster)} alt={`${ex.title} 전시 포스터`} /></div>
@@ -193,7 +193,7 @@ export default function ExhibitionDetail() {
             </div>
             <div className="drel">
               {D.related.map((r) => (
-                <a key={r.title} href="#">
+                <a key={r.title} href="#/exhibition/monet100">
                   <img src={img(r.img)} alt={`${r.title} 포스터`} />
                   <span><strong>{r.title}</strong><span>{r.meta}</span></span>
                 </a>

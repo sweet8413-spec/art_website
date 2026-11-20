@@ -9,7 +9,7 @@ export default function CardSection({ section }: { section: CardSectionData }) {
       <SectionHeader id={titleId} title={section.title} desc={section.desc} />
       <div className="grid card-grid">
         {section.items.map((c) => (
-          <a key={c.title} href="#" className="card">
+          <a key={c.title} href="#/exhibition/monet100" className="card">
             <div className="card__poster" style={{ background: c.tint }}>
               <img src={c.img} alt={c.imgAlt} style={{ objectPosition: c.imgPos ?? 'center' }} />
               {c.badge && <span className={`badge badge--${c.badge.tone}`}>{c.badge.label}</span>}

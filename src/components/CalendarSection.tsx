@@ -115,7 +115,7 @@ export default function CalendarSection({ events, today }: Props) {
               return (
                 <a
                   key={`${e.day}-${i}`}
-                  href="#"
+                  href="#/exhibition/monet100"
                   data-day={e.day}
                   className={`ev${e.day === selected ? ' is-selected' : ''}${past ? ' is-past' : ''}`}
                 >

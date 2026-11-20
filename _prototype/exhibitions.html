@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전시 · 아트사이드 ARTSIDE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:#ECEBE8;color:#1C1C1C;font-family:'Noto Sans KR',sans-serif}
+a{color:#1C1C1C}a:hover{color:#C8102E}
+.wrap{max-width:1240px;margin:0 auto;padding-left:32px;padding-right:32px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(28,28,28,.08)}
+.hd{display:flex;align-items:center;gap:40px;flex-wrap:wrap;padding-top:20px;padding-bottom:20px}
+.nav{display:flex;gap:32px;font-size:15px}.nav a{text-decoration:none;padding-bottom:4px;color:#6E6E6E}
+.nav a.on{color:#1C1C1C;font-weight:700;border-bottom:1px solid #1C1C1C}
+.search{margin-left:auto;flex:0 1 320px;min-width:200px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #1C1C1C}
+.search input{flex:1 1 auto;min-width:0;border:none;font:inherit;font-size:15px;padding:10px 0;background:transparent;outline:none}
+.search button{border:none;background:transparent;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.crumb{font-size:13px;color:#8A8A8A;padding-top:24px;display:flex;gap:8px}.crumb a{color:#8A8A8A;text-decoration:none}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-top:16px}
+.ph h1{margin:0;font-family:'Noto Serif KR',serif;font-size:40px;font-weight:700}
+.ph p{margin:8px 0 0;font-size:15px;color:#6E6E6E}
+.ph .cnt{font-size:14px;color:#6E6E6E}.ph .cnt b{color:#1C1C1C;font-size:24px;font-family:'Noto Serif KR',serif;margin-right:4px}
+.bar{position:sticky;top:85px;z-index:40;background:rgba(236,235,232,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 0;margin-top:24px;border-bottom:1px solid #D9D7D1}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:none;background:#fff;color:#4A4A4A;font:inherit;font-size:14px;padding:0 18px;min-height:40px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .2s}
+.tab:hover{color:#1C1C1C;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.tab.on{background:#1C1C1C;color:#fff;font-weight:700}
+.tab i{font-style:normal;font-size:12px;opacity:.55}
+.sort{display:flex;gap:2px;background:#fff;border-radius:999px;padding:4px}
+.sort button{border:none;background:none;font:inherit;font-size:13px;color:#8A8A8A;cursor:pointer;padding:0 14px;min-height:32px;border-radius:999px;transition:all .2s}
+.sort button.on{background:#ECEBE8;color:#1C1C1C;font-weight:700}
+.note{font-size:12px;color:#8A8A8A;margin-top:24px}
+footer{margin-top:112px;background:#E2E1DD}
+.mlist{column-count:3;column-gap:24px;padding-top:32px}
+.mc{position:relative;display:block;break-inside:avoid;margin:0 0 24px;border-radius:20px;overflow:hidden;text-decoration:none;color:#1C1C1C;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.07);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.mc:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(0,0,0,.12);color:#1C1C1C}
+.mc img{display:block;width:100%;height:auto;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.mc:hover img{transform:scale(1.04)}
+.mc-chips{position:absolute;left:14px;top:14px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}
+.mc-chip{font-size:11px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.22);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25)}
+.mc-badge{position:absolute;right:14px;top:14px;z-index:2;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.92);color:#1C1C1C}
+.mc-badge.hot{background:#C8102E;color:#fff}
+.mc-pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-size:13px;font-weight:500;padding:0 16px;min-height:38px;white-space:nowrap;transition:background .2s,color .2s}
+.mc-pill.dark{background:#1C1C1C;color:#fff}
+.mc-pill.light{background:#fff;color:#1C1C1C}
+.mc:hover .mc-pill.dark{background:#C8102E}
+.mc-pill i{font-style:normal;width:20px;height:20px;border-radius:50%;background:#fff;color:#1C1C1C;display:inline-flex;align-items:center;justify-content:center;font-size:11px;margin-right:-8px}
+.mc-stats{display:flex;gap:18px}
+.mc-stats b{display:block;font-size:15px;font-weight:700}
+.mc-stats small{display:block;font-size:11px;opacity:.6;margin-top:2px}
+/* A: image + overlay title */
+.mc-a{background:#1C1C1C}
+.mc-a img{min-height:240px}
+.mc-a::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 50%,rgba(0,0,0,.72) 100%)}
+.mc-a-foot{position:absolute;left:18px;right:16px;bottom:16px;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;color:#fff}
+.mc-a-foot strong{font-size:18px;font-weight:700;line-height:1.35}
+.mc-a-foot small{display:block;font-size:12px;opacity:.75;margin-top:4px;font-weight:400}
+.mc-round{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:14px;transition:background .2s,color .2s}
+.mc:hover .mc-round{background:#fff;color:#1C1C1C}
+/* B: tall image + text overlay */
+.mc-b{color:#fff;background:#1C1C1C}
+.mc-b img{min-height:420px}
+.mc-b::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.85) 100%)}
+.mc-b:hover{color:#fff}
+.mc-b-top{position:absolute;left:18px;top:16px;z-index:2;font-size:11px;letter-spacing:.06em;opacity:.85}
+.mc-b-body{position:absolute;left:20px;right:20px;bottom:20px;z-index:2;display:flex;flex-direction:column;gap:10px}
+.mc-b-body strong{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;line-height:1.3;letter-spacing:.02em}
+.mc-b-body p{margin:0;font-size:13px;line-height:1.6;opacity:.8}
+.mc-b-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:6px}
+/* C: white card, inset image */
+.mc-c{padding:10px}
+.mc-c-img{position:relative;border-radius:14px;overflow:hidden}
+.mc-dots{position:absolute;left:0;right:0;bottom:12px;z-index:2;display:flex;justify-content:center;gap:5px}
+.mc-dots span{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5)}.mc-dots span:first-child{background:#fff}
+.mc-c-body{padding:16px 10px 8px;display:flex;flex-direction:column;gap:6px}
+.mc-c-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.mc-c-head strong{font-size:18px;font-weight:700;line-height:1.35}
+.mc-outline{flex:none;font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid #1C1C1C;white-space:nowrap}
+.mc-outline.red{border-color:#C8102E;color:#C8102E}
+.mc-c-meta{font-size:12px;color:#8A8A8A}
+.mc-c-desc{font-size:13px;color:#6E6E6E;line-height:1.6}
+.mc-c-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}
+.mc-c-foot b{font-size:17px}.mc-c-foot b small{font-size:12px;font-weight:400;color:#8A8A8A;margin-left:4px}
+/* D: dark card, title top */
+.mc-d{color:#fff;background:#111}
+.mc-d img{min-height:340px;opacity:.9}
+.mc-d::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.1) 40%,rgba(0,0,0,.1) 60%,rgba(0,0,0,.85) 100%)}
+.mc-d:hover{color:#fff}
+.mc-d-top{position:absolute;left:20px;right:18px;top:18px;z-index:2;display:flex;justify-content:space-between;gap:12px}
+.mc-d-top strong{font-size:20px;font-weight:700;line-height:1.3}
+.mc-d-top small{display:block;font-size:12px;opacity:.7;margin-top:4px;font-weight:400}
+.mc-d-top em{font-style:normal;font-size:11px;opacity:.8;text-align:right;white-space:nowrap}
+.mc-d-foot{position:absolute;left:20px;right:18px;bottom:18px;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+/* E: white, progress */
+.mc-e{padding:10px}
+.mc-e-img{border-radius:14px;overflow:hidden;position:relative}
+.mc-e-body{padding:16px 10px 6px}
+.mc-e-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.mc-e-head strong{font-size:18px;font-weight:700;line-height:1.35}
+.mc-e-head small{display:block;font-size:12px;color:#8A8A8A;margin-top:3px;font-weight:400}
+.mc-prog{flex:none;width:84px;text-align:right}
+.mc-prog span{display:block;height:16px;border-radius:999px;background:#ECEBE7;position:relative;overflow:hidden}
+.mc-prog span i{position:absolute;left:0;top:0;bottom:0;background:#1C1C1C;border-radius:999px}
+.mc-prog span em{position:absolute;right:6px;top:0;font-style:normal;font-size:10px;line-height:16px;color:#fff;mix-blend-mode:difference}
+.mc-prog small{display:block;font-size:10px;color:#8A8A8A;margin-top:4px}
+.mc-e .mc-stats{justify-content:space-between;margin:16px 0;padding-top:14px;border-top:1px solid #ECEBE7}
+.mc-e .mc-stats b{font-size:13px}
+.mc-wide{display:flex;justify-content:center;width:100%;border-radius:999px;background:#1C1C1C;color:#fff;font-size:13px;font-weight:500;min-height:40px;align-items:center;transition:background .2s}
+.mc:hover .mc-wide{background:#C8102E}
+/* F: text first, image below */
+.mc-f{padding:22px 22px 10px}
+.mc-f-k{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700}
+.mc-f-k span{width:8px;height:8px;border-radius:50%;background:#C8102E}
+.mc-f strong{display:block;font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;line-height:1.3;margin-top:16px}
+.mc-f p{margin:8px 0 0;font-size:13px;color:#6E6E6E;line-height:1.6}
+.mc-f-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:16px 0 14px}
+.mc-f-img{border-radius:14px;overflow:hidden;margin:0 -12px}
+.mempty{padding:80px 0;text-align:center;color:#8A8A8A}
+@media (max-width:1000px){.mlist{column-count:2}}
+@media (max-width:640px){.mlist{column-count:1}}
+
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+<a href="index.html" aria-label="아트사이드 홈"><img src="../public/images/artside_logo.png" alt="ARTSIDE 아트사이드" style="height:40px;width:auto;display:block"></a>
+<nav class="nav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="exhibitions.html" class="on" aria-current="page">전시</a></nav>
+<form class="search" onsubmit="return false"><label for="q" class="sr">전시 검색</label><input id="q" type="search" placeholder="전시명, 작가명, 장소"><button type="submit" aria-label="검색하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button></form>
+</div></header>
+<main class="wrap">
+<nav class="crumb" aria-label="현재 위치"><a href="index.html">홈</a><span>/</span><span style="color:#1C1C1C">전시</span></nav>
+<div class="ph"><div><h1>전시</h1><p>지금 열리고 있거나 곧 열리는 국내외 전시를 모았어요.</p></div><span class="cnt" aria-live="polite"><b id="cnt"></b>개의 전시</span></div>
+<div class="bar"><div class="tabs" id="tabs" role="tablist" aria-label="전시 구분"></div>
+<div class="sort" role="group" aria-label="정렬"><button type="button" data-s="end" class="on">종료 임박순</button><button type="button" data-s="new">최근 오픈순</button></div></div>
+<div class="mlist" id="grid"></div>
+<p class="note">※ 전시 정보는 2026. 11. 20 기준 시안용 데이터예요. 관람 전 예매처에서 다시 확인해 주세요.</p>
+</main>
+<footer><div class="wrap" style="padding-top:40px;padding-bottom:56px;display:flex;gap:28px;align-items:center;flex-wrap:wrap;font-size:13px;color:#5E5E5E">
+<img src="../public/images/artside_logo.png" alt="ARTSIDE 아트사이드" style="height:24px;width:auto;display:block">
+<span>전시회 가기 전에도, 전시장에서도 작품 이야기를 쉽게.</span>
+<span style="font-size:12px">전시 포스터·이미지: 각 전시 주최 측 (강의용 시안)</span>
+</div></footer>
+<script>
+const L = [{"id": "thiebaud", "title": "현대카드 컬처프로젝트 31 웨인 티보 전", "venue": "DDP 뮤지엄", "city": "서울", "region": "국내", "img": "posters/thiebaud.gif", "pos": "center", "period": "2026.9.19 – 2027.2.21", "status": "진행 중", "badge": "진행 중", "endingSoon": false, "upcoming": false, "endDays": 93, "startKey": "2026-09-19", "order": 0, "progress": 40, "ddLabel": "D-93", "ddSub": "종료까지", "tag": "진행 중"}, {"id": "picasso", "title": "피카소에서 키키 스미스까지: 모더니티의 초상", "venue": "대구미술관", "city": "대구", "region": "국내", "img": "posters/picasso_kiki.gif", "pos": "center", "period": "2026.11.17 – 2027.3.14", "status": "진행 중", "badge": "진행 중", "endingSoon": false, "upcoming": false, "endDays": 114, "startKey": "2026-11-17", "order": 1, "progress": 3, "ddLabel": "D-114", "ddSub": "종료까지", "tag": "진행 중"}, {"id": "spain", "title": "스페인 미술 500년: 빛과 어둠의 연대기", "venue": "예술의전당 한가람디자인미술관", "city": "서울", "region": "국내", "img": "posters/spain.gif", "pos": "center", "period": "2026.9.22 – 2027.1.20", "status": "진행 중", "badge": "진행 중", "endingSoon": false, "upcoming": false, "endDays": 61, "startKey": "2026-09-22", "order": 2, "progress": 49, "ddLabel": "D-61", "ddSub": "종료까지", "tag": "진행 중"}, {"id": "walls", "title": "브래드 월스 사진전", "venue": "그라운드시소 용산", "city": "서울", "region": "국내", "img": "posters/walls.gif", "pos": "center", "period": "2026.9.11 – 2027.3.1", "status": "진행 중", "badge": "진행 중", "endingSoon": false, "upcoming": false, "endDays": 101, "startKey": "2026-09-11", "order": 3, "progress": 41, "ddLabel": "D-101", "ddSub": "종료까지", "tag": "진행 중"}, {"id": "sangseo", "title": "상서, 컬렉션을 읽다", "venue": "간송미술관", "city": "서울", "region": "국내", "img": "posters/sangseo.gif", "pos": "center", "period": "~ 2026.12.6", "status": "진행 중", "badge": "D-16 종료", "endingSoon": true, "upcoming": false, "endDays": 16, "startKey": "2000-01-01", "order": 4, "progress": null, "ddLabel": "D-16", "ddSub": "종료까지", "tag": "진행 중"}, {"id": "gyeomjae", "title": "대구간송미술관 특별전 겸재 정선", "venue": "대구간송미술관", "city": "대구", "region": "국내", "img": "posters/gyeomjae.gif", "pos": "center", "period": "~ 2026.12.27", "status": "진행 중", "badge": "D-37 종료", "endingSoon": true, "upcoming": false, "endDays": 37, "startKey": "2000-01-01", "order": 6, "progress": null, "ddLabel": "D-37", "ddSub": "종료까지", "tag": "진행 중"}, {"id": "portrait", "title": "현대회화 하이라이트: 시대의 초상", "venue": "글로벌세아 아트스페이스", "city": "서울", "region": "국내", "img": "posters/portrait.gif", "pos": "center", "period": "~ 2027.1.9", "status": "진행 중", "badge": "진행 중", "endingSoon": false, "upcoming": false, "endDays": 50, "startKey": "2000-01-01", "order": 7, "progress": null, "ddLabel": "D-50", "ddSub": "종료까지", "tag": "진행 중"}, {"id": "morandi", "title": "조르조 모란디 (GIORGIO MORANDI)", "venue": "더현대 서울 ALT.1", "city": "서울", "region": "국내", "img": "posters/morandi.gif", "pos": "center", "period": "2026.11.21 – 2027.3.1", "status": "오픈 예정", "badge": "D-1 오픈", "endingSoon": false, "upcoming": true, "endDays": 101, "startKey": "2026-11-21", "order": 8, "progress": 0, "ddLabel": "D-1", "ddSub": "오픈까지", "tag": "오픈 예정"}, {"id": "delacroix", "title": "사랑을 담아, 미셸 들라크루아 드림", "venue": "롯데뮤지엄", "city": "서울", "region": "국내", "img": "posters/delacroix.gif", "pos": "center", "period": "2026.12.4 – 2027.3.7", "status": "오픈 예정", "badge": "D-14 오픈", "endingSoon": false, "upcoming": true, "endDays": 107, "startKey": "2026-12-04", "order": 9, "progress": 0, "ddLabel": "D-14", "ddSub": "오픈까지", "tag": "오픈 예정"}, {"id": "monet100", "title": "MONET 100: 시대를 읽는 감각의 계보", "venue": "신세계백화점 본점 더 헤리티지", "city": "서울", "region": "국내", "img": "posters/monet.gif", "pos": "center", "period": "2026.12.5 – 2027.2.28", "status": "오픈 예정", "badge": "D-15 오픈", "endingSoon": false, "upcoming": true, "endDays": 100, "startKey": "2026-12-05", "order": 10, "progress": 0, "ddLabel": "D-15", "ddSub": "오픈까지", "tag": "오픈 예정"}, {"id": "mummy", "title": "미라, 봉인된 신비", "venue": "예술의전당 서예박물관", "city": "서울", "region": "국내", "img": "posters/mummy.gif", "pos": "center", "period": "2026.12.11 – 2027.4.11", "status": "오픈 예정", "badge": "D-21 오픈", "endingSoon": false, "upcoming": true, "endDays": 142, "startKey": "2026-12-11", "order": 11, "progress": 0, "ddLabel": "D-21", "ddSub": "오픈까지", "tag": "오픈 예정"}, {"id": "zurbaran", "title": "수르바란 (Zurbarán)", "venue": "루브르 박물관", "city": "파리", "region": "해외", "img": "posters/zurbaran.jpg", "pos": "28% center", "period": "2026.10.7 – 2027.1.25", "status": "진행 중", "badge": "진행 중", "endingSoon": false, "upcoming": false, "endDays": 66, "startKey": "2026-10-07", "order": 12, "progress": 40, "ddLabel": "D-66", "ddSub": "종료까지", "tag": "해외"}, {"id": "goldin", "title": "낸 골딘: You Never Did Anything Wrong", "venue": "헤이워드 갤러리", "city": "런던", "region": "해외", "img": "posters/goldin.jpg", "pos": "center", "period": "2026.11.24 – 2027.3.14", "status": "오픈 예정", "badge": "D-4 오픈", "endingSoon": false, "upcoming": true, "endDays": 114, "startKey": "2026-11-24", "order": 13, "progress": 0, "ddLabel": "D-4", "ddSub": "오픈까지", "tag": "해외"}, {"id": "artport", "title": "artport: 인터넷 아트의 역사", "venue": "휘트니 미술관", "city": "뉴욕", "region": "해외", "img": "posters/artport.jpg", "pos": "center", "period": "2026.11.21 – 2027.3.28", "status": "오픈 예정", "badge": "D-1 오픈", "endingSoon": false, "upcoming": true, "endDays": 128, "startKey": "2026-11-21", "order": 14, "progress": 0, "ddLabel": "D-1", "ddSub": "오픈까지", "tag": "해외"}, {"id": "calle", "title": "소피 칼: Is It Better?", "venue": "함부르거 반호프", "city": "베를린", "region": "해외", "img": "posters/calle.jpg", "pos": "62% center", "period": "2026.11.13 – 2027.4.4", "status": "진행 중", "badge": "진행 중", "endingSoon": false, "upcoming": false, "endDays": 135, "startKey": "2026-11-13", "order": 15, "progress": 5, "ddLabel": "D-135", "ddSub": "종료까지", "tag": "해외"}], P = '../public/images/', DETAIL = 'exhibition-monet100.html';
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const V = ['a', 'f', 'd', 'e', 'b', 'c'];
+const variantOf = (x, k) => { if (x.id === 'monet100') return 'c'; const v = V[k % V.length]; return v === 'e' && x.progress == null ? 'b' : v; };
+function cardHTML(x, k, P, href) {
+  const v = variantOf(x, k), doc = x.id === 'monet100';
+  const img = `<img src="${P + x.img}" alt="${esc(x.title)} 포스터" style="object-position:${x.pos}">`;
+  const chips = `<div class="mc-chips"><span class="mc-chip">${esc(x.city)}</span><span class="mc-chip">${x.tag}</span></div>`;
+  const badge = `<span class="mc-badge${x.endingSoon ? ' hot' : ''}">${x.badge}</span>`;
+  const st = (a, b) => `<div><b>${a}</b><small>${b}</small></div>`;
+  if (v === 'a') return `<a class="mc mc-a" href="${href}">${img}${chips}${badge}<div class="mc-a-foot"><strong>${esc(x.title)}<small>${esc(x.venue)}</small></strong><span class="mc-round">↗</span></div></a>`;
+  if (v === 'b') return `<a class="mc mc-b" href="${href}">${img}<span class="mc-b-top">${esc(x.city)} · ${x.tag}</span>${badge}<div class="mc-b-body"><strong>${esc(x.title)}</strong><p>${esc(x.venue)}<br>${x.period}</p><div class="mc-b-row"><div class="mc-stats">${st(x.ddLabel, x.ddSub)}${st(esc(x.city), '도시')}</div><span class="mc-pill light">전시 보기</span></div></div></a>`;
+  if (v === 'c') return `<a class="mc mc-c" href="${href}"><div class="mc-c-img">${img}${chips}${badge}<div class="mc-dots"><span></span><span></span><span></span><span></span></div></div><div class="mc-c-body"><div class="mc-c-head"><strong>${esc(x.title)}</strong><span class="mc-outline${doc ? ' red' : ''}">${doc ? '도슨트 해설' : x.tag}</span></div><span class="mc-c-meta">${x.period} · ${esc(x.city)}</span><span class="mc-c-desc">${doc ? '대표작 11점의 감상 포인트를 미리 보고 가세요. ' : ''}${esc(x.venue)}</span><div class="mc-c-foot"><b>${x.ddLabel}<small>${x.ddSub}</small></b><span class="mc-pill dark">${doc ? '전시 상세 보기' : '전시 보기'} <i>↗</i></span></div></div></a>`;
+  if (v === 'd') return `<a class="mc mc-d" href="${href}">${img}<div class="mc-d-top"><strong>${esc(x.title)}<small>${esc(x.venue)}</small></strong><em>${x.period}</em></div><div class="mc-d-foot"><div class="mc-stats">${st(x.ddLabel, x.ddSub)}${st(esc(x.city), '도시')}${st(x.tag, '상태')}</div><span class="mc-pill light">자세히</span></div></a>`;
+  if (v === 'e') return `<a class="mc mc-e" href="${href}"><div class="mc-e-img">${img}${badge}</div><div class="mc-e-body"><div class="mc-e-head"><strong>${esc(x.title)}<small>${esc(x.venue)}</small></strong><div class="mc-prog"><span><i style="width:${x.progress}%"></i><em>${x.progress}%</em></span><small>기간 진행률</small></div></div><div class="mc-stats">${st(x.ddLabel, x.ddSub)}${st(esc(x.city), '도시')}${st(x.tag, '상태')}</div><span class="mc-wide">전시 보기</span></div></a>`;
+  return `<a class="mc mc-f" href="${href}"><span class="mc-f-k"><span></span>ARTSIDE PICK</span><strong>${esc(x.title)}</strong><p>${esc(x.venue)} · ${x.period}</p><div class="mc-f-row"><div class="mc-stats">${st(x.ddLabel, x.ddSub)}${st(esc(x.city), '도시')}</div><span class="mc-pill dark">전시 보기</span></div><div class="mc-f-img">${img}</div></a>`;
+}
+
+const TABS = [['all','전체',x=>true],['now','진행 중',x=>x.status==='진행 중'],['up','오픈 예정',x=>x.upcoming],['end','곧 끝나요',x=>x.endingSoon],['abroad','해외',x=>x.region==='해외']];
+let tab = 'all', sort = 'end';
+function render() {
+  $('tabs').innerHTML = TABS.map(([k, l, f]) => `<button type="button" role="tab" class="tab${tab === k ? ' on' : ''}" aria-selected="${tab === k}" data-t="${k}">${l} <i>${L.filter(f).length}</i></button>`).join('');
+  const f = TABS.find(t => t[0] === tab)[2];
+  const list = L.filter(f).sort((a, b) => sort === 'end' ? a.endDays - b.endDays : b.startKey.localeCompare(a.startKey));
+  const fi = list.findIndex(x => x.id === 'monet100'); if (fi > 0) list.unshift(list.splice(fi, 1)[0]);
+  $('cnt').textContent = list.length;
+  $('grid').innerHTML = list.length ? list.map((x, i) => cardHTML(x, list[0].id === 'monet100' ? i - 1 : i, P, DETAIL)).join('') : '<p class="mempty">조건에 맞는 전시가 없어요.</p>';
+  document.querySelectorAll('.sort button').forEach(b => b.classList.toggle('on', b.dataset.s === sort));
+}
+$('tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) { tab = b.dataset.t; render(); } });
+document.querySelector('.sort').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) { sort = b.dataset.s; render(); } });
+render();
+</script>
+<script>
+(function () {
+  if (window.__artsideSmooth) return; window.__artsideSmooth = true;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var target = window.scrollY, cur = window.scrollY, raf = 0;
+  function max() { return document.documentElement.scrollHeight - window.innerHeight; }
+  function innerScroller(el) {
+    while (el && el !== document.body && el !== document.documentElement) {
+      var cs = getComputedStyle(el);
+      if (/(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 1) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+  function step() {
+    cur += (target - cur) * 0.12;
+    if (Math.abs(target - cur) < 0.5) { cur = target; window.scrollTo({ top: cur, behavior: 'instant' }); raf = 0; return; }
+    window.scrollTo({ top: cur, behavior: 'instant' });
+    raf = requestAnimationFrame(step);
+  }
+  window.addEventListener('wheel', function (e) {
+    if (e.defaultPrevented || e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    if (innerScroller(e.target)) return;
+    e.preventDefault();
+    if (!raf) { target = cur = window.scrollY; }
+    target = Math.max(0, Math.min(max(), target + e.deltaY * (e.deltaMode === 1 ? 40 : 1)));
+    if (!raf) raf = requestAnimationFrame(step);
+  }, { passive: false });
+  window.addEventListener('scroll', function () { if (!raf) { target = cur = window.scrollY; } }, { passive: true });
+})();
+</script>
+<script>
+(function () {
+  if (window.__artsideCount) return; window.__artsideCount = true;
+  var RE = /D-(\\d+)/;
+  var seen = new WeakSet();
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(node) {
+    var m = RE.exec(node.nodeValue); if (!m) return;
+    var target = parseInt(m[1], 10), t0 = performance.now(), dur = Math.min(1400, 600 + target * 8);
+    function frame(now) {
+      var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      var cur = node.nodeValue, mm = RE.exec(cur); if (!mm) return;
+      node.nodeValue = cur.replace(RE, 'D-' + Math.round(target * e));
+      if (p < 1) requestAnimationFrame(frame); else node.nodeValue = cur.replace(RE, 'D-' + target);
+    }
+    node.nodeValue = node.nodeValue.replace(RE, 'D-0');
+    requestAnimationFrame(frame);
+  }
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      (en.target.__cuNodes || []).forEach(run);
+      en.target.__cuNodes = [];
+    });
+  }, { threshold: 0.6 }) : null;
+  var pending = false;
+  function scan() {
+    pending = false;
+    if (reduce || !io) return;
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = w.nextNode())) {
+      if (seen.has(n) || !RE.test(n.nodeValue)) continue;
+      var el = n.parentElement; if (!el || el.closest('script, style, header, nav')) continue;
+      seen.add(n);
+      (el.__cuNodes = el.__cuNodes || []).push(n);
+      io.observe(el);
+    }
+  }
+  function schedule() { if (!pending) { pending = true; requestAnimationFrame(scan); } }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule); else schedule();
+  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true });
+  setTimeout(schedule, 700);
+})();
+</script>
+</body>
+</html>

@@ -8,8 +8,8 @@ function QuizCard({ item, index }: { item: QuizItem; index: number }) {
   const no = String(index + 1).padStart(2, '0')
 
   return (
-    <div className={`qcard${flipped ? ' is-flipped' : ''}`}>
-      <div className="qcard__inner">
+    <div className={`qcard qwrap${flipped ? ' is-flipped is-on' : ''}`}>
+      <div className="qcard__inner qinner">
         <button
           type="button"
           className="qface qface--front"
@@ -26,6 +26,9 @@ function QuizCard({ item, index }: { item: QuizItem; index: number }) {
               눌러서 답 보기
             </span>
           </span>
+          <span className="qflip-ic" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 12a8 8 0 0 1 13.7-5.7L20 8M20 4v4h-4M20 12a8 8 0 0 1-13.7 5.7L4 16M4 20v-4h4" /></svg>
+          </span>
         </button>
 
         <div className="qface qface--back" aria-hidden={!flipped}>
@@ -33,9 +36,9 @@ function QuizCard({ item, index }: { item: QuizItem; index: number }) {
           <strong className="qface__title">{item.title}</strong>
           <span className="qface__artist">{item.artist}</span>
           <p className="qface__answer">{item.answer}</p>
-          <a href="#" className="qface__ex" tabIndex={flipped ? 0 : -1}>
+          <a href="#/exhibition/monet100" className="qface__ex" tabIndex={flipped ? 0 : -1}>
             <span className="qface__ex-top">
-              <span>이 작품, 지금 볼 수 있어요</span>
+              <span>지금 볼 수 있는 전시</span>
               <span className="qface__dday">{item.dday}</span>
             </span>
             <strong className="qface__ex-name">{item.ex}</strong>
