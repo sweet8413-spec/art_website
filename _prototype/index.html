@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아트사이드 ARTSIDE — 전시회 가기 전에도, 전시장에서도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#1C1C1C;font-family:'Noto Sans KR',sans-serif}
+a{color:#1C1C1C}a:hover{color:#C8102E}
+.serif{font-family:'Noto Serif KR',serif}
+.wrap{max-width:1240px;margin:0 auto;padding-left:32px;padding-right:32px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+/* header */
+header{border-bottom:1px solid #E2E0DA;background:#fff}
+.hd{display:flex;align-items:center;gap:40px;flex-wrap:wrap;padding-top:20px;padding-bottom:20px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.dot{width:10px;height:10px;border-radius:50%;background:#C8102E;display:inline-block}
+.nav{display:flex;gap:32px;font-size:15px}.nav a{text-decoration:none;padding-bottom:4px}
+.search{margin-left:auto;flex:0 1 320px;min-width:200px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #1C1C1C}
+.search input{flex:1 1 auto;min-width:0;border:none;font:inherit;font-size:15px;padding:10px 0;background:transparent}
+.search button{border:none;background:transparent;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+/* hero */
+.hero{background:#0E0E0E;color:#fff;overflow:hidden}
+.stage{position:relative;height:440px;margin-top:56px;perspective:1400px}
+.panel{position:absolute;left:50%;top:20px;width:300px;height:380px;margin-left:-150px;background:#1C1C1C;transition:transform .45s cubic-bezier(.2,.8,.2,1),filter .3s ease;box-shadow:0 30px 60px rgba(0,0,0,.55)}
+.panel img{width:100%;height:100%;object-fit:cover;display:block}
+.pins{display:none}.panel.active .pins{display:block}
+@keyframes pinPulse{0%{transform:scale(1);opacity:.75}80%{opacity:0}100%{transform:scale(3.2);opacity:0}}
+@keyframes pinIn{0%{transform:scale(0);opacity:0}60%{transform:scale(1.35);opacity:1}100%{transform:scale(1)}}
+@keyframes tipIn{0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}
+.pin{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;padding:0;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3}
+.pin .ring{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#FF3B55;animation:pinPulse 1.8s ease-out infinite}
+.pin .ring2{animation-delay:.9s}
+.pin .pdot{position:relative;width:12px;height:12px;border-radius:50%;background:#C8102E;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.5);animation:pinIn .5s cubic-bezier(.2,.9,.3,1.4) both;transition:transform .2s ease,background .2s ease}
+.pin:hover .pdot,.pin:focus-visible .pdot{transform:scale(1.4)}
+.pin[aria-expanded="true"] .pdot{background:#fff;border-color:#C8102E}
+.pin[aria-expanded="true"] .ring{animation:none;opacity:0}
+.tip{position:absolute;width:220px;background:#fff;color:#1C1C1C;padding:12px 14px;text-align:left;font-size:13px;line-height:1.6;box-shadow:0 12px 28px rgba(0,0,0,.45);z-index:4;animation:tipIn .25s ease-out both}
+.tip strong{display:block;font-weight:700;margin-bottom:4px}
+.ctl{width:44px;height:44px;border:1px solid #4A4A4A;background:transparent;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.bars{display:flex;gap:8px;margin-top:8px}.bars span{height:2px;transition:width .4s}
+/* sections */
+.sec{padding-top:80px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid #1C1C1C;padding-top:20px;margin-bottom:32px}
+.sh h2{margin:0;font-family:'Noto Serif KR',serif;font-size:28px;font-weight:700}
+.sh .desc{font-size:14px;color:#6E6E6E}
+.more{font-size:14px;color:#6E6E6E;text-decoration:none}
+.pick{display:flex;flex-direction:column;text-decoration:none;color:#1C1C1C}
+.pick .im{aspect-ratio:3/4;overflow:hidden;background:#F4F3EF}
+.pick img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.pick:hover img{transform:scale(1.04)}
+.pick .line{width:32px;height:1px;background:#1C1C1C;transition:width .3s ease}
+.pick:hover .line{width:56px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:48px 32px}
+.card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:#1C1C1C}
+.poster{position:relative;aspect-ratio:3/4;padding:14px}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.badge{position:absolute;top:0;left:0;color:#fff;font-size:12px;font-weight:700;padding:6px 10px}
+/* quiz */
+.qcard{height:440px;perspective:1400px}
+.qin{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.qcard.on .qin{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.front{padding:0;border:none;background:#1C1C1C;color:#fff;text-align:left;cursor:pointer;overflow:hidden;font-family:inherit}
+.qcard.on .front{pointer-events:none}.qcard:not(.on) .back{pointer-events:none}
+.back{background:#fff;border:1px solid #1C1C1C;padding:24px;display:flex;flex-direction:column;text-align:left;transform:rotateY(180deg)}
+footer{margin-top:112px;background:#F4F3EF}
+.end-card:hover .end-img{transform:scale(1.04)}
+.end-card:hover .end-bar{background:#C8102E}
+.tk:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.10)}
+.tk:hover .tk-cta{background:#C8102E}
+.fnum{width:26px;height:26px;border-radius:50%;border:1px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none}
+@keyframes chipPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes missFade{0%{opacity:0;transform:scale(.6)}20%{opacity:1;transform:scale(1)}80%{opacity:1}100%{opacity:0}}
+@keyframes ringIn{0%{transform:translate(-50%,-50%) scale(2.2);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.find-hintchip{animation:chipPulse 1.6s ease-in-out infinite}
+.find-miss{animation:missFade 1.4s ease-out both}
+.find-ring{animation:ringIn .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes docIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:translateY(0)}}
+.find-docent{animation:docIn .45s ease-out both}
+@media (max-width:600px){.tk>div:first-child{flex-basis:110px!important}}
+@media (max-width:720px){.hero h1{font-size:32px!important}.sh h2{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div class="wrap hd">
+<a href="#" class="logo"><img src="../public/images/artside_logo.png" alt="ARTSIDE 아트사이드" style="height: 40px; width: auto; display: block"></a>
+<nav class="nav" aria-label="주 메뉴"><a href="#" aria-current="page" style="font-weight:700;border-bottom:1px solid #1C1C1C">홈</a><a href="#" style="color:#6E6E6E">전시</a></nav>
+<form class="search" onsubmit="return false"><label for="q" class="sr">전시 검색</label><input id="q" type="search" placeholder="전시명, 작가명, 장소"><button type="submit" aria-label="검색하기"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button></form>
+</div></header>
+
+<main>
+<section class="hero" aria-labelledby="h1">
+<div class="wrap" style="padding-top:88px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center">
+<span style="font-size:12px;letter-spacing:.2em;color:#A8A6A0">TODAY’S GALLERY · 2026. 11. 20</span>
+<h1 id="h1" class="serif" style="margin:0;font-size:44px;font-weight:500;line-height:1.4">지금 만날 수 있는 전시의<br>대표 작품을 먼저 둘러보세요</h1>
+<p style="margin:0;font-size:15px;color:#B5B3AD">마우스를 좌우로 움직여 둘러보세요. 그림 위 빨간 점을 누르면 감상 포인트를 볼 수 있어요.</p>
+</div>
+<div class="stage" id="stage"></div>
+<div class="wrap" style="padding-top:12px;padding-bottom:72px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+<div style="display:flex;align-items:center;gap:20px">
+<button type="button" class="ctl" id="prev" aria-label="이전 작품"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<div style="display:flex;flex-direction:column;gap:4px;min-width:300px"><strong class="serif" id="curTitle" style="font-size:22px;font-weight:700"></strong><span id="curArtist" style="font-size:13px;color:#A8A6A0"></span></div>
+<button type="button" class="ctl" id="next" aria-label="다음 작품"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;border-top:1px solid #333;padding-top:16px;margin-top:4px;min-width:360px">
+<span style="display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;color:#A8A6A0"><span class="dot" style="width:6px;height:6px" aria-hidden="true"></span>이 작품을 볼 수 있는 전시 · <span id="curStatus"></span></span>
+<strong class="serif" id="curEx" style="font-size:18px;font-weight:700"></strong>
+<span id="curVenue" style="font-size:13px;color:#B5B3AD"></span>
+</div>
+<a href="#" style="display:inline-flex;align-items:center;gap:10px;background:#fff;color:#1C1C1C;text-decoration:none;font-size:15px;font-weight:500;padding:13px 26px;min-height:46px;margin-top:6px">전시 상세 바로가기 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<div class="bars" id="bars" aria-hidden="true"></div>
+<span style="font-size:11px;color:#6E6C68">※ 진주 귀고리·별이 빛나는 밤의 전시 연결은 시안용 예시예요.</span>
+</div>
+</section>
+
+<section class="wrap sec" aria-labelledby="pickT">
+<div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2 id="pickT">이번 주 추천 전시</h2><span class="desc">에디터가 고른 이번 주의 전시</span></div><a href="#" class="more">전체보기 →</a></div>
+<div class="grid" id="picks"></div>
+</section>
+
+<section class="wrap sec" aria-labelledby="quizT">
+<div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2 id="quizT">이 그림, 알고 있었나요?</h2><span class="desc">카드를 누르면 답과 함께, 그 작품을 만날 수 있는 전시를 알려 드려요</span></div><span style="font-size:12px;color:#8A8A8A">※ 연결된 전시는 시안용 예시예요</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:28px" id="quiz"></div>
+</section>
+
+<div id="secA"></div>
+
+<section aria-labelledby="findT" style="background:#1C1C1C;color:#fff;margin-top:96px">
+<div class="wrap" style="padding-top:80px;padding-bottom:80px;display:flex;flex-wrap:wrap;gap:56px;align-items:flex-start">
+<div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:18px">
+<span style="display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.2em;color:#B5B3AD"><span aria-hidden="true" style="width:6px;height:6px;border-radius:50%;background:#C8102E"></span>숨은 그림 찾기</span>
+<h2 id="findT" class="serif" style="margin:0;font-size:40px;font-weight:700;line-height:1.35">거대한 파도 사이,<br>후지산은 어디 있을까요?</h2>
+<p style="margin:0;font-size:15px;line-height:1.75;color:#B5B3AD">〈가나가와 해변의 높은 파도 아래〉 · 가쓰시카 호쿠사이, 1831년경</p>
+<ol id="fSteps" style="list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:15px;color:#E2E0DA">
+<li style="display:flex;align-items:center;gap:12px"><span id="fStep1" class="fnum">1</span>오른쪽 그림에서 후지산을 찾아 눌러 보세요</li>
+<li style="display:flex;align-items:center;gap:12px"><span class="fnum" style="border-color:#6E6C68;color:#A8A6A0">2</span>못 찾겠다면 정답 보기</li></ol>
+<div id="fMsgRow" style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:54px;border-left:2px solid #4A4A4A;padding-left:14px"><p id="fMsg" aria-live="polite" style="margin:0;font-size:15px;line-height:1.75"></p><button type="button" id="fRetry" hidden style="flex:0 0 auto;align-items:center;gap:6px;border:1px solid #6E6C68;background:transparent;color:#fff;font:inherit;font-size:13px;padding:0 12px;min-height:34px;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"></path></svg>다시 하기</button></div>
+<div id="fActions" style="display:flex;gap:12px;flex-wrap:wrap"><button type="button" id="findBtn" style="border:1px solid #fff;font:inherit;font-size:15px;font-weight:500;padding:0 28px;min-height:48px;cursor:pointer"></button></div>
+<div id="fDocent" class="find-docent" hidden style="border-top:1px solid #3A3A3A;padding-top:16px;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px"><div style="display:flex;flex-direction:column;gap:3px"><strong style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#C8102E"></span>큰 파도, 작은 후지산</strong><span style="font-size:13px;line-height:1.6;color:#C9C7C1">가장 높은 산을 가장 작게 그려 화면에 깊이를 만들었어요.</span></div><div style="display:flex;flex-direction:column;gap:3px"><strong style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#C8102E"></span>파도 속 세 척의 배</strong><span style="font-size:13px;line-height:1.6;color:#C9C7C1">몸을 숙여 버티는 사람들. 자연 앞의 인간이에요.</span></div><div style="display:flex;flex-direction:column;gap:3px"><strong style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#C8102E"></span>새로운 파랑</strong><span style="font-size:13px;line-height:1.6;color:#C9C7C1">유럽에서 막 들어온 프러시안 블루로 바다를 칠했어요.</span></div><div style="display:flex;flex-direction:column;gap:3px"><strong style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#C8102E"></span>여러 장인 그림</strong><span style="font-size:13px;line-height:1.6;color:#C9C7C1">목판화라 세계 여러 미술관에 같은 그림이 있어요.</span></div></div>
+</div>
+<div style="flex:1 1 520px;min-width:0"><div id="findFrame" role="button" aria-label="그림에서 후지산 위치 누르기" style="aspect-ratio:3/2;background:#2E2E2E;position:relative;overflow:hidden">
+<img src="../public/images/hokusai_great-wave.jpg" alt="가쓰시카 호쿠사이, 가나가와 해변의 높은 파도 아래" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
+<div id="findLayer"></div>
+</div></div>
+</div>
+</section>
+
+<section class="wrap" style="padding-top:96px" aria-labelledby="calT">
+<div class="sh" style="margin-bottom:28px"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2 id="calT">전시 달력</h2><span class="desc">날짜를 누르면 그날의 전시 일정으로 이동해요</span></div>
+<div style="display:flex;gap:20px;font-size:13px;color:#6E6E6E"><span style="display:flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:6px;height:6px;border-radius:50%;background:#1C1C1C"></span>오픈</span><span style="display:flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:6px;height:6px;border-radius:50%;background:#C8102E"></span>종료</span></div></div>
+<div id="calBox" style="display:flex;flex-wrap:wrap;border:1px solid #E2E0DA"></div>
+</section>
+
+<div id="secB"></div>
+</main>
+
+<footer><div class="wrap" style="padding-top:40px;padding-bottom:56px;display:flex;gap:28px;align-items:center;flex-wrap:wrap;font-size:13px;color:#5E5E5E">
+<img src="../public/images/artside_logo.png" alt="ARTSIDE 아트사이드" style="height: 24px; width: auto; display: block">
+<span>전시회 가기 전에도, 전시장에서도 작품 이야기를 쉽게.</span>
+<span style="font-size:12px">작품 이미지: Wikimedia Commons (퍼블릭 도메인) · 전시 포스터: 각 전시 주최 측 (강의용 시안)</span>
+<span style="margin-left:auto;display:flex;gap:24px"><a href="#" style="color:#5E5E5E">서비스 소개</a><a href="#" style="color:#5E5E5E">문의</a></span>
+</div></footer>
+
+<script>
+const DATA = {"art":[{"ex":{"name":"빛의 화가 페르메이르와 네덜란드 황금시대","venue":"국립중앙박물관","period":"2026.9.25 – 2027.1.17","status":"진행중"},"title":"진주 귀고리를 한 소녀","artist":"요하네스 페르메이르","year":"1665년경","material":"캔버스에 유채","owner":"헤이그 마우리츠하위스 미술관","line":"어깨 너머로 막 돌아본, 그 찰나","img":"../public/images/vermeer_girl-with-a-pearl-earring.jpg","pos":"center","points":[{"n":"1","x":"47%","y":"60%","text":"진주 귀고리 — 윤곽선 없이 흰 물감 몇 번으로 반짝임만 찍었어요. 가까이 보면 진주가 거의 그려져 있지 않아요."},{"n":"2","x":"39%","y":"18%","text":"파란 터번 — 청금석이라는 보석을 갈아 만든 아주 비싼 파란 물감(울트라마린)을 썼어요."}],"story":"","question":""},{"ex":{"name":"사랑을 담아, 미셸 들라크루아 드림","venue":"롯데뮤지엄","period":"2026.12.4 – 2027.3.7","status":"12.4 오픈 · D-14"},"title":"포스터 속 겨울 파리","artist":"미셸 들라크루아","year":"전시 대표 이미지","material":"","owner":"","line":"눈 내리는 옛 파리, 화가의 어린 시절 기억","img":"../public/images/delacroix_work.jpg","pos":"center","points":[{"n":"1","x":"52%","y":"40%","text":"광장의 크리스마스트리 — 들라크루아가 그리는 파리는 늘 축제를 준비하는 것처럼 따뜻해요."},{"n":"2","x":"40%","y":"80%","text":"트리를 꾸미는 사람들 — 아주 작게 그린 사람 하나하나에 저마다의 이야기가 있어요. 가까이 다가가 찾아보세요."}],"story":"","question":""},{"ex":{"name":"반 고흐: 별과 사이프러스","venue":"서울시립미술관 서소문본관","period":"2026.11.1 – 2027.3.1","status":"진행중"},"title":"별이 빛나는 밤","artist":"빈센트 반 고흐","year":"1889","material":"캔버스에 유채","owner":"뉴욕 현대미술관(MoMA)","line":"잠 못 드는 밤, 창밖 하늘이 소용돌이쳤다","img":"../public/images/van-gogh_starry-night.jpg","pos":"15% center","points":[{"n":"1","x":"63%","y":"30%","text":"소용돌이치는 하늘 — 붓질 방향을 눈으로 따라가 보세요. 하늘 전체가 움직이는 것처럼 보여요."},{"n":"2","x":"15%","y":"50%","text":"불꽃처럼 솟은 나무 — 사이프러스 나무가 땅과 하늘을 잇는 것처럼 높이 솟아 있어요."}],"story":"고흐가 프랑스 생레미의 요양원에 머물 때 방 창밖으로 본 새벽 풍경을 바탕으로 그렸어요. 아래쪽 마을은 실제 창밖에는 없던 것을 상상으로 더한 거예요.","question":"이 밤은 고요하게 느껴지나요, 시끄럽게 느껴지나요?"},{"ex":{"name":"MONET 100: 시대를 읽는 감각의 계보","venue":"신세계본점 더 헤리티지","period":"2026.12.5 – 2027.2.28","status":"12.5 오픈 · D-15"},"title":"까치","artist":"클로드 모네","year":"1868–1869","material":"캔버스에 유채","owner":"파리 오르세 미술관","line":"하얀 눈밭, 울타리 위에 앉은 까치 한 마리","img":"../public/images/monet_the-magpie.jpg","pos":"25% center","points":[{"n":"1","x":"15%","y":"45%","text":"울타리 위의 까치 — 온통 하얀 풍경 속에서 유일하게 까만 점. 그림의 제목이자 주인공이에요."},{"n":"2","x":"40%","y":"80%","text":"파란 그림자 — 모네는 눈 위 그림자를 회색이 아니라 파란색으로 칠했어요. 당시엔 낯설었지만 실제 빛을 더 닮았죠."}],"story":"","question":""},{"ex":{"name":"수르바란 (Zurbarán)","venue":"루브르 박물관 · 파리","period":"2026.10.7 – 2027.1.25","status":"진행중"},"title":"성녀 카실다","artist":"프란시스코 데 수르바란","year":"1635년경","material":"캔버스에 유채","owner":"마드리드 티센보르네미사 미술관","line":"치마폭의 빵이 장미로 변한 순간","img":"../public/images/posters/zurbaran.jpg","pos":"35% center","points":[{"n":"1","x":"53%","y":"82%","text":"치마폭의 장미 — 몰래 나르던 빵이 들키는 순간 장미로 변했다는 전설을 그렸어요."},{"n":"2","x":"36%","y":"56%","text":"반짝이는 옷감 — 수르바란은 비단의 주름과 광택을 손에 잡힐 듯 그리는 화가로 유명해요."}],"story":"","question":""}],"quiz":[{"title":"모나리자","artist":"레오나르도 다 빈치, 1503–1519년경","img":"../public/images/da-vinci_mona-lisa.jpg","focus":"center 18%","q":"모나리자를 세계 최고로 만든 건 도둑이었다?","a":"1911년 루브르에서 도난당했다가 2년 만에 되찾은 사건이 전 세계 신문에 실리면서, 모나리자는 가장 유명한 그림이 되었어요.","ex":"레오나르도 다 빈치: 르네상스의 미소","venue":"예술의전당 한가람미술관","dday":"D-100"},{"title":"키스","artist":"구스타프 클림트, 1907–1908","img":"../public/images/klimt_the-kiss.jpg","focus":"center 22%","q":"이 그림에는 진짜 금이 들어 있다?","a":"맞아요. 금세공사였던 아버지에게 배운 솜씨로, 클림트는 물감 위에 진짜 금박을 붙였어요. 그래서 조명에 따라 그림이 반짝여요.","ex":"클림트, 황금의 시대","venue":"국립현대미술관 덕수궁관","dday":"D-86"},{"title":"이삭 줍기","artist":"장 프랑수아 밀레, 1857","img":"../public/images/millet_the-gleaners.jpg","focus":"36% center","q":"평화로운 시골 풍경, 사실은 불편한 그림이었다?","a":"추수가 끝난 밭에서 떨어진 이삭을 줍는 건 가장 가난한 사람들의 일이었어요. 처음 공개됐을 때 가난을 대놓고 그렸다는 이유로 비판을 받았어요.","ex":"밀레와 바르비종의 하늘","venue":"부산시립미술관","dday":"D-72"},{"title":"안개 바다 위의 방랑자","artist":"카스파르 다비트 프리드리히, 1818년경","img":"../public/images/friedrich_wanderer.jpg","focus":"center 24%","q":"이 남자는 왜 끝까지 뒤돌아 서 있을까?","a":"화가가 일부러 얼굴을 감췄어요. 뒷모습만 보이니 우리가 그 사람 자리에 서서 같은 풍경을 바라보게 되죠. 이런 인물을 ‘뒤돌아선 인물’이라고 불러요.","ex":"낭만주의, 숭고한 풍경","venue":"대전시립미술관","dday":"D-107"}],"picks":[{"title":"현대카드 컬처프로젝트 31 웨인 티보 전","venue":"DDP 뮤지엄","period":"2026.9.19 – 2027.2.21","img":"../public/images/posters/thiebaud.gif","imgAlt":"웨인 티보 전 포스터"},{"title":"피카소에서 키키 스미스까지: 모더니티의 초상","venue":"대구미술관","period":"2026.11.17 – 2027.3.14","img":"../public/images/posters/picasso_kiki.gif","imgAlt":"피카소에서 키키 스미스까지 포스터"},{"title":"스페인 미술 500년: 빛과 어둠의 연대기","venue":"예술의전당 한가람디자인미술관","period":"2026.9.22 – 2027.1.20","img":"../public/images/posters/spain.gif","imgAlt":"스페인 미술 500년 포스터"},{"title":"브래드 월스 사진전","venue":"그라운드시소 용산","period":"2026.9.11 – 2027.3.1","img":"../public/images/posters/walls.gif","imgAlt":"브래드 월스 사진전 포스터"}],"sectionsA":[{"title":"곧 끝나요","desc":"종료가 가까운 순서","items":[{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/sangseo.gif","imgAlt":"전시 포스터","title":"상서, 컬렉션을 읽다","short":"상서, 컬렉션을 읽다","meta":"간송미술관 · ~ 2026.12.6","tint":"#EDE6DA","hasBadge":true,"badge":"D-16","badgeBg":"#C8102E","hasKicker":false,"kicker":""},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/tiffman.gif","imgAlt":"전시 포스터","title":"헤일리 티프먼, 일상을 그리다","short":"헤일리 티프먼","meta":"포디움다이브 광안(부산) · ~ 2026.12.20","tint":"#ECE3E6","hasBadge":true,"badge":"D-30","badgeBg":"#C8102E","hasKicker":false,"kicker":""},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/gyeomjae.gif","imgAlt":"전시 포스터","title":"대구간송미술관 특별전 겸재 정선","short":"겸재 정선","meta":"대구간송미술관 · ~ 2026.12.27","tint":"#EDE6DA","hasBadge":true,"badge":"D-37","badgeBg":"#C8102E","hasKicker":false,"kicker":""},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/portrait.gif","imgAlt":"전시 포스터","title":"현대회화 하이라이트: 시대의 초상","short":"시대의 초상","meta":"글로벌세아 아트스페이스 · ~ 2027.1.9","tint":"#E6E6E1","hasBadge":true,"badge":"D-50","badgeBg":"#C8102E","hasKicker":false,"kicker":""}]}],"sectionsB":[{"title":"곧 열려요","desc":"오픈이 가까운 순서","items":[{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/morandi.gif","imgAlt":"전시 포스터","title":"조르조 모란디 (GIORGIO MORANDI)","short":"조르조 모란디","meta":"더현대 서울 ALT.1 · 2026.11.21 – 2027.3.1","tint":"#E6E6E1","hasBadge":true,"badge":"D-1 오픈","badgeBg":"#1C1C1C","hasKicker":false,"kicker":""},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/delacroix.gif","imgAlt":"전시 포스터","title":"사랑을 담아, 미셸 들라크루아 드림","short":"사랑을 담아, 미셸 들라크루아","meta":"롯데뮤지엄 · 2026.12.4 – 2027.3.7","tint":"#ECE3E6","hasBadge":true,"badge":"D-14 오픈","badgeBg":"#1C1C1C","hasKicker":false,"kicker":""},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/monet.gif","imgAlt":"전시 포스터","title":"MONET 100: 시대를 읽는 감각의 계보","short":"MONET 100","meta":"신세계본점 더 헤리티지 · 2026.12.5 – 2027.2.28","tint":"#E2E7EA","hasBadge":true,"badge":"D-15 오픈","badgeBg":"#1C1C1C","hasKicker":false,"kicker":""},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/mummy.gif","imgAlt":"전시 포스터","title":"미라, 봉인된 신비","short":"미라, 봉인된 신비","meta":"예술의전당 서예박물관 · 2026.12.11 – 2027.4.11","tint":"#EDE6DA","hasBadge":true,"badge":"D-21 오픈","badgeBg":"#1C1C1C","hasKicker":false,"kicker":""}]},{"title":"해외 화제의 전시","desc":"여행길에 들르기 좋은 전시","items":[{"imgPos":"28% center","hasImg":true,"noImg":false,"img":"../public/images/posters/zurbaran.jpg","imgAlt":"수르바란, 성녀 카실다 (전시 대표 이미지)","title":"수르바란 (Zurbarán)","short":"수르바란","meta":"루브르 박물관 · 2026.10.7 – 2027.1.25","tint":"#EDE6DA","hasBadge":false,"badge":"","badgeBg":"#1C1C1C","hasKicker":true,"kicker":"파리 · 프랑스"},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/goldin.jpg","imgAlt":"낸 골딘 전시 대표 이미지","title":"낸 골딘: You Never Did Anything Wrong","short":"낸 골딘","meta":"헤이워드 갤러리 · 2026.11.24 – 2027.3.14","tint":"#E6E6E1","hasBadge":false,"badge":"","badgeBg":"#1C1C1C","hasKicker":true,"kicker":"런던 · 영국"},{"imgPos":"center","hasImg":true,"noImg":false,"img":"../public/images/posters/artport.jpg","imgAlt":"artport 전시 대표 이미지","title":"artport: 인터넷 아트의 역사","short":"artport: 인터넷 아트의 역사","meta":"휘트니 미술관 · 2026.11.21 – 2027.3.28","tint":"#E2E7EA","hasBadge":false,"badge":"","badgeBg":"#1C1C1C","hasKicker":true,"kicker":"뉴욕 · 미국"},{"imgPos":"62% center","hasImg":true,"noImg":false,"img":"../public/images/posters/calle.jpg","imgAlt":"소피 칼 전시 대표 이미지","title":"소피 칼: Is It Better?","short":"소피 칼","meta":"함부르거 반호프 · 2026.11.13 – 2027.4.4","tint":"#ECE3E6","hasBadge":false,"badge":"","badgeBg":"#1C1C1C","hasKicker":true,"kicker":"베를린 · 독일"}]}],"cal":[{"name":"생명의 기원: 사라진 세계들","left":"17.24%","width":"82.76%","label":"11.6 오픈 · 전쟁기념관"},{"name":"피카소에서 키키 스미스까지","left":"55.17%","width":"44.83%","label":"11.17 오픈 · 대구미술관"},{"name":"조르조 모란디","left":"68.97%","width":"31.03%","label":"11.21 오픈 · 더현대 서울"},{"name":"데이비드 호크니: BIGGER & CLOSER","left":"0.00%","width":"96.55%","label":"~ 11.29 종료 · 라이트룸 울산"}],"ticks":[{"left":"0.00%","label":"1일","weight":400,"ink":"#6E6E6E"},{"left":"13.79%","label":"5일","weight":400,"ink":"#6E6E6E"},{"left":"31.03%","label":"10일","weight":400,"ink":"#6E6E6E"},{"left":"48.28%","label":"15일","weight":400,"ink":"#6E6E6E"},{"left":"65.52%","label":"20일 오늘","weight":700,"ink":"#C8102E"},{"left":"82.76%","label":"25일","weight":400,"ink":"#6E6E6E"},{"left":"100.00%","label":"30일","weight":400,"ink":"#6E6E6E"}]};
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- hero gallery ---------- */
+const art = DATA.art, GAP = 300, K = 0.55;
+let mx = 0, cur = 2, openPin = null;
+const stage = $('stage');
+art.forEach((a, i) => {
+  const el = document.createElement('div');
+  el.className = 'panel';
+  el.innerHTML = `<img src="${a.img}" alt="${esc(a.title)}" style="object-position:${a.pos}"><div class="pins">` +
+    a.points.map((p, j) => {
+      const parts = p.text.split(' — '); const px = parseFloat(p.x), py = parseFloat(p.y);
+      const tl = px > 55 ? `calc(${p.x} - 232px)` : `calc(${p.x} + 18px)`;
+      const tt = py > 60 ? `calc(${p.y} - 150px)` : `calc(${p.y} - 14px)`;
+      return `<button type="button" class="pin" data-a="${i}" data-p="${j}" aria-expanded="false" aria-label="감상 포인트: ${esc(parts[0])}" style="left:${p.x};top:${p.y}"><span class="ring" style="animation-delay:${j*0.35}s"></span><span class="ring ring2"></span><span class="pdot"></span></button>` +
+        `<div class="tip" hidden data-tip="${i}-${j}" role="note" style="left:${tl};top:${tt}"><strong>${esc(parts[0])}</strong>${esc(parts.slice(1).join(' — '))}</div>`;
+    }).join('') + '</div>';
+  stage.appendChild(el);
+});
+const panels = [...stage.children];
+const bars = $('bars'); art.forEach(() => bars.appendChild(document.createElement('span')));
+function layout() {
+  const shift = -mx * K;
+  const xs = art.map((a, i) => (i - 2) * GAP + shift);
+  let c = 0; xs.forEach((x, i) => { if (Math.abs(x - mx) < Math.abs(xs[c] - mx)) c = i; });
+  panels.forEach((el, i) => {
+    const x = xs[i], act = i === c, r = x / GAP;
+    el.style.transform = `translateX(${x.toFixed(1)}px) translateZ(${(act ? 60 : Math.min(Math.abs(r), 3) * 25).toFixed(1)}px) rotateY(${(-r * 20).toFixed(2)}deg)`;
+    el.style.zIndex = act ? 20 : 10 - Math.round(Math.abs(r));
+    el.style.filter = act ? 'none' : 'brightness(0.5)';
+    el.classList.toggle('active', act);
+  });
+  [...bars.children].forEach((b, i) => { b.style.width = i === c ? '28px' : '12px'; b.style.background = i === c ? '#fff' : '#5A5A5A'; });
+  if (c !== cur) { cur = c; closePins(); }
+  const a = art[cur];
+  $('curTitle').textContent = `〈${a.title}〉`;
+  $('curArtist').textContent = `${a.artist} · ${a.year}`;
+  $('curStatus').textContent = a.ex.status;
+  $('curEx').textContent = a.ex.name;
+  $('curVenue').textContent = `${a.ex.venue} · ${a.ex.period}`;
+}
+function closePins() {
+  stage.querySelectorAll('.pin').forEach(b => b.setAttribute('aria-expanded', 'false'));
+  stage.querySelectorAll('.tip').forEach(t => t.hidden = true);
+  openPin = null;
+}
+stage.addEventListener('mousemove', e => {
+  const rc = stage.getBoundingClientRect();
+  const v = Math.max(-2.2 * GAP, Math.min(2.2 * GAP, e.clientX - (rc.left + rc.width / 2)));
+  if (Math.abs(v - mx) > 4) { mx = v; layout(); }
+});
+stage.addEventListener('click', e => {
+  const b = e.target.closest('.pin'); if (!b) return;
+  const key = b.dataset.a + '-' + b.dataset.p; const was = openPin === key;
+  closePins();
+  if (!was) { b.setAttribute('aria-expanded', 'true'); stage.querySelector(`[data-tip="${key}"]`).hidden = false; openPin = key; }
+});
+const aim = n => { const v = Math.max(0, Math.min(art.length - 1, n)); mx = (v - 2) * GAP / (1 + K); layout(); };
+$('prev').onclick = () => aim(cur - 1);
+$('next').onclick = () => aim(cur + 1);
+layout();
+
+/* ---------- picks ---------- */
+$('picks').innerHTML = DATA.picks.map(c => `<a href="#" class="pick">
+<div class="im"><img src="${c.img}" alt="${esc(c.imgAlt)}"></div>
+<div style="position:relative;width:84%;margin-top:-64px;background:#fff;padding:18px 20px 0 0;display:flex;flex-direction:column;gap:8px">
+<span class="serif" style="font-style:italic;font-size:13px;color:#7D6A4D">${esc(c.period)}</span>
+<strong class="serif" style="font-size:19px;font-weight:500;line-height:1.4;letter-spacing:.03em">${esc(c.title)}</strong>
+<span style="font-size:13px;color:#6E6E6E">${esc(c.venue)}</span></div>
+<span style="display:flex;align-items:center;gap:14px;margin-top:18px;font-size:13px"><span class="line" aria-hidden="true"></span>전시 보기</span></a>`).join('');
+
+/* ---------- quiz ---------- */
+$('quiz').innerHTML = DATA.quiz.map((q, k) => `<div class="qcard"><div class="qin">
+<button type="button" class="face front" data-flip aria-label="${esc(q.q)} 답 보기">
+<img src="${q.img}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:${q.focus};filter:brightness(.8)">
+<span style="position:absolute;left:0;right:0;bottom:0;padding:24px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.82) 38%)">
+<span style="font-size:11px;letter-spacing:.2em;color:#E2E0DA">QUESTION 0${k+1}</span>
+<span class="serif" style="font-size:22px;font-weight:700;line-height:1.45">${esc(q.q)}</span>
+<span style="display:flex;align-items:center;gap:10px;font-size:13px"><span aria-hidden="true" style="width:26px;height:26px;border-radius:50%;border:1px solid #fff;display:flex;align-items:center;justify-content:center">?</span>눌러서 답 보기</span></span></button>
+<div class="face back">
+<span style="font-size:11px;font-weight:700;letter-spacing:.2em;color:#C8102E">ANSWER 0${k+1}</span>
+<strong class="serif" style="display:block;margin-top:10px;font-size:18px;font-weight:700;line-height:1.4;text-align:left">${esc(q.title)}</strong>
+<span style="margin-top:4px;font-size:12px;color:#6E6E6E">${esc(q.artist)}</span>
+<p style="margin:14px 0 0;padding-top:14px;border-top:1px solid #E2E0DA;font-size:14px;line-height:1.7;flex:1 1 auto">${esc(q.a)}</p>
+<a href="#" style="display:flex;flex-direction:column;gap:4px;background:#1C1C1C;color:#fff;text-decoration:none;padding:12px 14px;margin-top:12px">
+<span style="display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;color:#C9C7C1"><span>이 작품, 지금 볼 수 있어요</span><span style="background:#C8102E;color:#fff;font-weight:700;letter-spacing:0;padding:2px 8px">${esc(q.dday)}</span></span>
+<strong style="font-size:14px;font-weight:700;line-height:1.4">${esc(q.ex)}</strong>
+<span style="display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#C9C7C1"><span>${esc(q.venue)}</span><span style="color:#fff">전시 보기 →</span></span></a>
+<button type="button" data-flip style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;border:none;background:transparent;color:#1C1C1C;font:inherit;font-size:13px;padding:0;margin-top:12px;min-height:28px;cursor:pointer"><span aria-hidden="true" style="width:26px;height:26px;border-radius:50%;border:1px solid #1C1C1C;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"></path></svg></span>질문 다시 보기</button>
+</div></div></div>`).join('');
+$('quiz').addEventListener('click', e => { const f = e.target.closest('[data-flip]'); if (f) f.closest('.qcard').classList.toggle('on'); });
+
+/* ---------- card sections ---------- */
+const sectionHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">${esc(sec.desc)}</span></div><a href="#" class="more">전체보기 →</a></div>
+<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:44px 28px">` + sec.items.map(c => `<a href="#" class="card">
+<div class="poster" style="background:${c.tint}">` + (c.hasImg ? `<img src="${c.img}" alt="${esc(c.imgAlt)}" style="object-position:${c.imgPos}">` : `<div style="width:100%;height:100%;border:1px solid #CFC8BC;display:flex;align-items:flex-end;padding:16px"><span class="serif" style="font-size:20px;font-weight:700;line-height:1.3">${esc(c.short)}</span></div>`) +
+  (c.hasBadge ? `<span class="badge" style="background:${c.badgeBg}">${esc(c.badge)}</span>` : '') + `</div>` +
+  (c.hasKicker ? `<span style="font-size:12px;letter-spacing:.14em;color:#6E6E6E">${esc(c.kicker)}</span>` : '') +
+  `<strong class="serif" style="font-size:18px;font-weight:700">${esc(c.title)}</strong><span style="font-size:14px;color:#6E6E6E">${esc(c.meta)}</span></a>`).join('') + `</div></section>`;
+const REASONS = {
+  '상서, 컬렉션을 읽다': '간송 컬렉션 속 길한 상징을 한자리에서 보는 드문 기회예요.',
+  '헤일리 티프먼, 일상을 그리다': '친구들과의 평범한 순간을 선명한 색으로 그린 원화를 부산에서 직접 볼 수 있어요.',
+  '대구간송미술관 특별전 겸재 정선': '교과서에서 보던 진경산수화를 원화의 붓 자국까지 가까이서 볼 수 있어요.',
+  '현대회화 하이라이트: 시대의 초상': '한 전시에서 현대회화가 사람을 그려 온 방식의 변화를 한 번에 훑어볼 수 있어요.'
+};
+const endHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">${esc(sec.desc)}</span></div><a href="#" class="more">전체보기 →</a></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px">` + sec.items.map(c => { const m = c.meta.match(/(\d{4})\.(\d+)\.(\d+)\s*$/); const wd = '일월화수목금토'[new Date(+m[1], +m[2] - 1, +m[3]).getDay()]; return `<a href="#" class="end-card" style="display:flex;flex-direction:column;text-decoration:none;color:#1C1C1C;background:#F4F3EF">
+<div style="padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px;flex:1 1 auto">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px"><span class="serif" style="font-size:56px;font-weight:700;line-height:.9;letter-spacing:-.02em;color:#1C1C1C">${esc(c.badge)}</span><span style="font-size:12px;line-height:1.4;color:#6E6E6E;text-align:right">${m[2]}월 ${m[3]}일 (${wd})<br>종료</span></div>
+<strong style="font-size:16px;font-weight:700;line-height:1.5;min-height:48px">${esc(c.title)}</strong>
+<div style="border-left:2px solid #B9AE9C;padding-left:12px;display:flex;flex-direction:column;gap:4px"><span style="font-size:11px;font-weight:700;letter-spacing:.08em;color:#7D6A4D">놓치면 아쉬운 이유</span><span style="font-size:13px;line-height:1.6;color:#3A3A3A;min-height:42px">${esc(REASONS[c.title] || '')}</span></div>
+<span style="font-size:12px;color:#6E6E6E">${esc(c.meta.split(' · ')[0])}</span></div>
+<div style="aspect-ratio:4/3;overflow:hidden;background:${c.tint}"><img class="end-img" src="${c.img}" alt="${esc(c.imgAlt)}" style="width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block;transition:transform .6s ease"></div>
+<span class="end-bar" style="display:flex;align-items:center;justify-content:center;height:44px;background:#1C1C1C;color:#fff;font-size:13px;transition:background .2s ease">전시 보기 →</span></a>`; }).join('') + `</div></section>`;
+$('secA').innerHTML = DATA.sectionsA.map(endHTML).join('');
+const openHTML = sec => `<section class="wrap sec"><div class="sh"><div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap"><h2>${esc(sec.title)}</h2><span class="desc">오픈 전에 미리 예매해 두세요</span></div><a href="#" class="more">전체보기 →</a></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(520px,100%),1fr));gap:28px">` + sec.items.map(c => { const m = c.meta.match(/(\d{4})\.(\d+)\.(\d+)\s*–/); const wd = '일월화수목금토'[new Date(+m[1], +m[2] - 1, +m[3]).getDay()]; const dd = c.badge.replace(' 오픈', ''); const n = parseInt(dd.slice(2), 10); const [venue, period] = c.meta.split(' · ');
+  return `<a href="#" class="tk" style="position:relative;display:flex;min-height:224px;background:#F4F3EF;text-decoration:none;color:#1C1C1C;transition:transform .25s ease,box-shadow .25s ease">
+<div style="flex:0 0 160px;overflow:hidden;background:${c.tint}"><img src="${c.img}" alt="${esc(c.imgAlt)}" style="width:100%;height:100%;object-fit:cover;object-position:${c.imgPos};display:block"></div>
+<div style="flex:1 1 auto;min-width:0;padding:24px;display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;letter-spacing:.12em;color:#7D6A4D">OPENING · ${m[2]}월 ${m[3]}일 (${wd})</span><strong class="serif" style="font-size:20px;font-weight:700;line-height:1.4">${esc(c.title)}</strong><span style="font-size:13px;line-height:1.6;color:#6E6E6E">${esc(venue)}<br>${esc(period)}</span><span class="tk-cta" style="margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:#1C1C1C;color:#fff;font-size:13px;font-weight:500;padding:10px 16px;transition:background .2s ease">미리 예매하기 →</span></div>
+<div style="position:relative;flex:0 0 116px;border-left:2px dashed #CFC8BC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center"><span aria-hidden="true" style="position:absolute;left:-11px;top:-10px;width:20px;height:20px;border-radius:50%;background:#fff"></span><span aria-hidden="true" style="position:absolute;left:-11px;bottom:-10px;width:20px;height:20px;border-radius:50%;background:#fff"></span><span style="font-size:11px;letter-spacing:.2em;color:#6E6E6E">OPEN IN</span><strong class="serif" style="font-size:40px;font-weight:700;line-height:1">${dd}</strong><span style="font-size:12px;font-weight:700;color:${n <= 1 ? '#C8102E' : '#6E6E6E'}">${n <= 1 ? '내일 오픈' : n <= 7 ? '이번 주 오픈' : '오픈 예정'}</span></div></a>`; }).join('') + `</div></section>`;
+$('secB').innerHTML = DATA.sectionsB.filter(sec => sec.title === '곧 열려요').map(openHTML).join('');
+
+/* ---------- find (숨은 그림 찾기) ---------- */
+const FX = 65, FY = 69;
+let fd = { st: 'idle', tries: 0, mx: 0, my: 0 };
+function renderFind() {
+  const done = fd.st === 'found' || fd.st === 'reveal';
+  const msg = fd.st === 'idle' ? '그림 위 아무 곳이나 눌러 보세요. 정답이면 빨간 원이 나타나요.'
+    : fd.st === 'miss' ? (fd.tries >= 2 ? `아쉬워요, 거기는 아니에요. 힌트: 점선 원 안을 잘 보세요. (${fd.tries}번째 시도)` : `아쉬워요, 거기는 아니에요. 다시 찾아보세요. (${fd.tries}번째 시도)`)
+    : fd.st === 'found' ? `찾았어요! ${fd.tries}번 만에 발견. 〈후가쿠 36경〉 연작 중 한 장이에요.`
+    : '파도 아래 가운데, 작게 솟은 산이 바로 후지산이에요.';
+  const m = $('fMsg'); m.textContent = msg; m.style.color = fd.st === 'idle' ? '#B5B3AD' : '#fff';
+  const row = $('fMsgRow'); row.style.borderLeftColor = done ? '#C8102E' : '#4A4A4A'; row.style.minHeight = done ? '0' : '54px';
+  $('fRetry').hidden = !done; $('fRetry').style.display = done ? 'inline-flex' : 'none'; $('fActions').style.display = done ? 'none' : 'flex';
+  const s1 = $('fStep1'); s1.style.borderColor = s1.style.color = done ? '#C8102E' : '#fff';
+  const b = $('findBtn'); b.textContent = done ? '다시 하기' : '정답 보기'; b.style.background = done ? '#fff' : 'transparent'; b.style.color = done ? '#1C1C1C' : '#fff';
+  $('findFrame').style.cursor = done ? 'default' : 'crosshair';
+  const dc = $('fDocent'); dc.hidden = !done; dc.style.display = done ? 'grid' : 'none'; $('fSteps').style.display = done ? 'none' : 'flex';
+  $('findLayer').innerHTML =
+    (fd.st === 'idle' ? `<span class="find-hintchip" style="position:absolute;left:16px;top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.94);color:#1C1C1C;font-size:13px;font-weight:500;padding:8px 14px;pointer-events:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>그림을 눌러 찾아보세요</span>` : '') +
+    (fd.st === 'miss' && fd.tries >= 2 ? `<span aria-hidden="true" style="position:absolute;left:${FX}%;top:${FY}%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%);border:2px dashed rgba(255,255,255,.9);border-radius:50%;pointer-events:none"></span>` : '') +
+    (fd.st === 'miss' ? `<span class="find-miss" aria-hidden="true" style="position:absolute;left:${fd.mx}%;top:${fd.my}%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:rgba(28,28,28,.75);border:2px solid #fff;color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;pointer-events:none">✕</span>` : '') +
+    (done ? `<span class="find-ring" aria-hidden="true" style="position:absolute;left:${FX}%;top:${FY}%;width:64px;height:64px;border-radius:50%;border:3px solid #C8102E;box-shadow:0 0 0 6px rgba(200,16,46,.25);pointer-events:none"></span><span style="position:absolute;left:${FX}%;top:calc(${FY}% + 40px);transform:translateX(-50%);background:#C8102E;color:#fff;font-size:12px;font-weight:700;padding:4px 10px;white-space:nowrap;pointer-events:none">후지산</span>` : '');
+}
+$('findFrame').addEventListener('click', e => {
+  if (fd.st === 'found' || fd.st === 'reveal') return;
+  const rc = e.currentTarget.getBoundingClientRect();
+  const x = (e.clientX - rc.left) / rc.width * 100, y = (e.clientY - rc.top) / rc.height * 100;
+  const hit = Math.hypot(x - FX, (y - FY) * (rc.height / rc.width)) < 7;
+  fd = { st: hit ? 'found' : 'miss', tries: fd.tries + 1, mx: x.toFixed(1), my: y.toFixed(1) };
+  renderFind();
+});
+$('fRetry').onclick = () => { fd = { st: 'idle', tries: 0, mx: 0, my: 0 }; renderFind(); };
+$('findBtn').onclick = () => { fd = (fd.st === 'found' || fd.st === 'reveal') ? { st: 'idle', tries: 0, mx: 0, my: 0 } : Object.assign({}, fd, { st: 'reveal' }); renderFind(); };
+renderFind();
+
+/* ---------- calendar ---------- */
+    const CAL_EVENTS = [
+      { m: 11, d: 6, kind: '오픈', title: '생명의 기원: 사라진 세계들', venue: '전쟁기념관 · 서울', desc: '공룡보다 먼저 지구에 살았던 생명들의 화석과 복원 모형을 시간 순서대로 따라가요.' },
+      { m: 11, d: 13, kind: '오픈', title: '소피 칼: Is It Better?', venue: '함부르거 반호프 · 베를린', desc: '사진과 글로 개인의 기억을 기록해 온 작가의 대규모 회고전이에요.' },
+      { m: 11, d: 17, kind: '오픈', title: '피카소에서 키키 스미스까지', venue: '대구미술관 · 대구', desc: '20세기 거장부터 동시대 작가까지, 판화로 보는 현대미술의 흐름이에요.' },
+      { m: 11, d: 21, kind: '오픈', title: '조르조 모란디', venue: '더현대 서울 ALT.1 · 서울', desc: '평생 병과 그릇만 그린 화가. 고요한 정물 속 미묘한 색의 차이를 만나요.' },
+      { m: 11, d: 21, kind: '오픈', title: 'artport: 인터넷 아트의 역사', venue: '휘트니 미술관 · 뉴욕', desc: '브라우저 안에서 태어난 예술 작품들을 처음부터 되짚어 보는 전시예요.' },
+      { m: 11, d: 24, kind: '오픈', title: '낸 골딘: You Never Did Anything Wrong', venue: '헤이워드 갤러리 · 런던', desc: '가까운 사람들의 일상을 솔직하게 담아 온 사진가의 작업을 모았어요.' },
+      { m: 11, d: 29, kind: '종료', title: '데이비드 호크니: BIGGER & CLOSER', venue: '라이트룸 울산 · 울산', desc: '호크니의 작업 세계를 거대한 화면과 소리로 둘러싸듯 감상하는 몰입형 전시예요.' },
+      { m: 12, d: 4, kind: '오픈', title: '사랑을 담아, 미셸 들라크루아 드림', venue: '롯데뮤지엄 · 서울', desc: '1950년대 파리의 골목과 사람들을 따뜻한 색으로 그린 그림들이에요.' },
+      { m: 12, d: 5, kind: '오픈', title: 'MONET 100: 시대를 읽는 감각의 계보', venue: '신세계본점 더 헤리티지 · 서울', desc: '모네와 그 뒤를 이은 화가들이 빛과 색을 어떻게 다뤘는지 따라가요.' },
+      { m: 12, d: 6, kind: '종료', title: '상서, 컬렉션을 읽다', venue: '간송미술관 · 서울', desc: '간송 컬렉션 속 상서로운 상징을 담은 그림과 공예품을 소개해요.' },
+      { m: 12, d: 11, kind: '오픈', title: '미라, 봉인된 신비', venue: '예술의전당 서예박물관 · 서울', desc: '고대 이집트 미라와 장례 문화를 통해 삶과 죽음에 대한 생각을 엿봐요.' },
+      { m: 12, d: 20, kind: '종료', title: '헤일리 티프먼, 일상을 그리다', venue: '포디움다이브 광안 · 부산', desc: '친구들과 보내는 평범한 순간을 선명한 색으로 그린 그림들이에요.' },
+      { m: 12, d: 27, kind: '종료', title: '대구간송미술관 특별전 겸재 정선', venue: '대구간송미술관 · 대구', desc: '우리 산천을 직접 보고 그린 진경산수화의 대가, 겸재 정선을 만나요.' }
+    ];
+    const CAL_Y = 2026, CAL_TODAY = { m: 11, d: 20 }, WD = ['일', '월', '화', '수', '목', '금', '토'];
+    const buildCal = (calM, calD, onPick) => {
+      const first = new Date(CAL_Y, calM - 1, 1), off = (first.getDay() + 6) % 7, dim = new Date(CAL_Y, calM, 0).getDate(), pdim = new Date(CAL_Y, calM - 1, 0).getDate();
+      const evs = CAL_EVENTS.filter(e => e.m === calM);
+      const cells = [], total = Math.ceil((off + dim) / 7) * 7;
+      for (let i = 0; i < total; i++) {
+        const d = i - off + 1, inM = d >= 1 && d <= dim;
+        const label = inM ? d : (d < 1 ? pdim + d : d - dim);
+        const isToday = inM && calM === CAL_TODAY.m && d === CAL_TODAY.d, isSel = inM && d === calD;
+        const dots = inM ? evs.filter(e => e.d === d).map(e => ({ c: e.kind === '종료' ? '#C8102E' : '#1C1C1C' })) : [];
+        cells.push({ label: String(label), inM: inM,
+          ink: !inM ? '#CFCDC7' : (isSel ? '#FFFFFF' : (isToday ? '#C8102E' : '#1C1C1C')),
+          bg: isSel ? (isToday ? '#C8102E' : '#1C1C1C') : 'transparent',
+          ring: isToday && !isSel ? 'inset 0 0 0 1px #C8102E' : 'none',
+          weight: isToday || isSel ? 700 : 400, cursor: inM ? 'pointer' : 'default',
+          dots: dots, aria: inM ? `${calM}월 ${d}일${dots.length ? ' · 일정 ' + dots.length + '개' : ''}` : '',
+          pick: () => { if (inM) onPick(d); } });
+      }
+      const weeks = [];
+      for (let i = 0; i < cells.length; i += 7) weeks.push({ days: cells.slice(i, i + 7) });
+      const list = evs.map((e, i) => {
+        const past = calM < CAL_TODAY.m || (calM === CAL_TODAY.m && e.d < CAL_TODAY.d);
+        const sel = e.d === calD;
+        return Object.assign({}, e, { id: `ev-${calM}-${e.d}-${i}`, day: String(e.d), sub: `${calM}월 · ${WD[new Date(CAL_Y, calM - 1, e.d).getDay()]}`,
+          kindBg: e.kind === '종료' ? '#C8102E' : '#1C1C1C', bar: sel ? '#C8102E' : '#1C1C1C',
+          bg: sel ? '#F7F5F0' : '#FFFFFF', op: past ? 0.5 : 1, state: past ? '지난 일정' : (sel ? '선택한 날짜' : '') });
+      });
+      return { weeks: weeks, list: list, label: `${CAL_Y}. ${calM}`, count: `${list.length}건` };
+    };
+    const calScroll = (calM, d) => {
+      const box = document.getElementById('cal-list'); if (!box) return;
+      const evs = CAL_EVENTS.filter(e => e.m === calM); let idx = evs.findIndex(e => e.d >= d); if (idx < 0) idx = evs.length - 1; if (idx < 0) return;
+      const el = document.getElementById(`ev-${calM}-${evs[idx].d}-${idx}`); if (el) box.scrollTo({ top: el.offsetTop - 8, behavior: 'smooth' });
+    };
+
+let calM = 11, calD = 20;
+const nav = (dir, lab, on) => `<button type="button" data-nav="${dir}" aria-label="${lab}" style="width:36px;height:36px;border:1px solid #E2E0DA;background:#fff;color:${on ? '#1C1C1C' : '#CFCDC7'};display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="${dir < 0 ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6'}"></path></svg></button>`;
+function renderCal(keepScroll) {
+  const box = $('calBox'); const prev = $('cal-list'); const top = prev ? prev.scrollTop : 0;
+  const C = buildCal(calM, calD, () => {});
+  box.innerHTML = `<div style="flex:0 1 380px;min-width:300px;padding:28px 28px 24px;border-right:1px solid #E2E0DA">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><strong class="serif" style="font-size:20px;font-weight:700" aria-live="polite">${C.label}</strong><div style="display:flex;gap:6px">${nav(-1, '이전 달', calM > 11)}${nav(1, '다음 달', calM < 12)}</div></div>
+<div style="display:grid;grid-template-columns:repeat(7,1fr);font-size:12px;color:#8A8A8A;text-align:center;padding-bottom:8px"><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span><span>일</span></div>
+${C.weeks.map(w => `<div style="display:grid;grid-template-columns:repeat(7,1fr)">${w.days.map(c => `<button type="button" ${c.inM ? `data-day="${c.label}"` : 'tabindex="-1"'} aria-label="${c.aria}" style="height:48px;border:none;background:transparent;padding:4px 0 0;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:${c.cursor};font-family:inherit"><span style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:${c.weight};color:${c.ink};background:${c.bg};box-shadow:${c.ring}">${c.label}</span><span style="display:flex;gap:3px;height:5px">${c.dots.map(d => `<span style="width:5px;height:5px;border-radius:50%;background:${d.c}"></span>`).join('')}</span></button>`).join('')}</div>`).join('')}
+<div style="display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid #E2E0DA;font-size:12px;color:#6E6E6E"><span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px #C8102E"></span>오늘 · 2026. 11. 20</div></div>
+<div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column">
+<div style="display:flex;align-items:baseline;justify-content:space-between;padding:28px 28px 16px"><strong class="serif" style="font-size:20px;font-weight:700">전시 일정</strong><span style="font-size:13px;color:#6E6E6E">${C.count}</span></div>
+<div id="cal-list" style="position:relative;height:430px;overflow-y:auto;padding:0 20px 20px 28px">
+${C.list.map(e => `<a href="#" id="${e.id}" style="display:flex;align-items:stretch;gap:20px;padding:18px 12px 18px 0;border-top:1px solid #EEECE7;text-decoration:none;color:#1C1C1C;background:${e.bg};opacity:${e.op};transition:background .3s ease">
+<span style="flex:0 0 64px;display:flex;flex-direction:column;gap:4px;padding-left:12px"><strong class="serif" style="font-size:26px;font-weight:700;line-height:1">${e.day}</strong><span style="font-size:12px;color:#6E6E6E">${e.sub}</span><span style="align-self:flex-start;margin-top:4px;background:${e.kindBg};color:#fff;font-size:11px;font-weight:700;padding:2px 7px">${e.kind}</span></span>
+<span aria-hidden="true" style="flex:0 0 2px;background:${e.bar}"></span>
+<span style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:5px"><span style="font-size:12px;color:#7D6A4D">${esc(e.venue)}</span><strong style="font-size:16px;font-weight:700;line-height:1.4">${esc(e.title)}</strong><span style="font-size:13px;line-height:1.6;color:#8A8A8A;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(e.desc)}</span></span>
+<span aria-hidden="true" style="flex:0 0 32px;height:32px;align-self:center;border:1px solid #E2E0DA;display:flex;align-items:center;justify-content:center;color:#6E6E6E"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"></path></svg></span></a>`).join('')}
+</div></div>`;
+  if (keepScroll) $('cal-list').scrollTop = top;
+}
+$('calBox').addEventListener('click', e => {
+  const n = e.target.closest('[data-nav]'), d = e.target.closest('[data-day]');
+  if (n) { const m = calM + Number(n.dataset.nav); if (m < 11 || m > 12) return; calM = m; calD = m === 11 ? 20 : 1; renderCal(false); calScroll(calM, calD); }
+  else if (d) { calD = Number(d.dataset.day); renderCal(true); calScroll(calM, calD); }
+});
+renderCal(false);
+</script>
+</body>
+</html>
