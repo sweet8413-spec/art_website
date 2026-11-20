@@ -3,6 +3,7 @@ import { monet100 as D } from '../data/monet100'
 import Header from './Header'
 import Footer from './Footer'
 import LightSeries from './LightSeries'
+import TalkMonet from './TalkMonet'
 
 const img = (p: string) => `images/${p}`
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -10,6 +11,7 @@ const TABS = [
   { id: 'intro', label: '전시 소개' },
   { id: 'works', label: '작품 해설' },
   { id: 'light', label: '빛의 연작' },
+  { id: 'talk', label: '모네와 대화' },
   { id: 'visit', label: '관람 정보' },
 ]
 
@@ -180,6 +182,8 @@ export default function ExhibitionDetail() {
           </section>
 
           <LightSeries />
+
+          <TalkMonet />
 
           <section className="dsec" id="visit" aria-labelledby="visit-t">
             <div className="sh"><div className="sh__title"><h2 id="visit-t">관람 정보</h2></div></div>
